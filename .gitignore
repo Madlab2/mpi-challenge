@@ -1,0 +1,8 @@
+# ignore entire .vscode folder
+.vscode
+
+# ignore all contents of build...
+build/*
+
+# but not the .gitkeep. This tweak adds a (nearly) empty build folder to the repo
+!build/.gitkeep
