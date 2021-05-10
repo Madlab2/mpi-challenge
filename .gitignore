@@ -6,3 +6,6 @@ build/*
 
 # but not the .gitkeep. This tweak adds a (nearly) empty build folder to the repo
 !build/.gitkeep
+
+# ignore VS-Studio specific content
+.vs
