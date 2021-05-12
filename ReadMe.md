@@ -22,6 +22,7 @@ When you are in the programme, type `strg+c` or `èxit` to leave.
 #### III) run application
     1. $ cd build
     2. $ ./main
+    3. enter path to file, e.g. ../test/ExampleTexts/text2.txt
 
 By default, the tests are built with the project. 
 

@@ -23,8 +23,8 @@ int main() {
     
 
     while(true) {
-        
-        std::cout << "[Menu] Enter a pah to a text file below or 'exit':" << std::endl;
+
+        std::cout << "[Menu] Enter a path to a text file below or 'exit':" << std::endl;
 
         std::getline(std::cin, input);
 
@@ -37,16 +37,24 @@ int main() {
 
             std::cout << "[Menu] Reading in file " << input << " ..." << std::endl;
             
+            auto start = std::chrono::system_clock::now();
             auto vec = std::make_shared<std::vector<std::string>>(IO::readStringsFromFile(input));
+            auto end = std::chrono::system_clock::now();
 
-            std::cout << "[Menu] starting merge sort on file " << input << " ..." << std::endl;
+            auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-            //TODO: start time measurement
+            std::cout << "[Menu] (time elapsed: " << elapsed.count() << "ms) Starting merge sort on file " << input << " ..." << std::endl;
+
+            
+            start = std::chrono::system_clock::now();
             mSort->mergeSort(vec, 0, vec->size() - 1);
+            end = std::chrono::system_clock::now();
 
-            std::cout << "[Menu] finished! Result will be printed below: \n\n\n";
+            elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-            IO::printVector(vec);
+            std::cout << "[Menu] (time elapsed: " << elapsed.count() << "ms) finished!" << std::endl;
+
+            //IO::printVector(vec);
 
             //wil automatically delete vec a this point as going out of scope
 
