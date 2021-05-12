@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -37,17 +39,18 @@ namespace IO {
         std::string inputString;
         std::vector<std::string> vec;
 
-        std::ifstream inputFile(filename);
+        std::ifstream inputFile;
+        
+        inputFile.open(filename);
 
         if(!inputFile.is_open()) {
 
             //could not open file
             // vec size is 0
-            
+            std::cout << "[IO] Could not open file." << std::endl;
             return vec;
         }
 
-        //inputFile.open(filename);
 
         inputFile >> inputString;
         inputFile.close();

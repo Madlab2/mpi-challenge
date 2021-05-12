@@ -36,7 +36,7 @@ int main() {
             
             auto vec = std::make_shared<std::vector<std::string>>(IO::readStringsFromFile(input));
 
-            mSort->mergeSort(std::move(vec), 0, vec->size() - 1);
+            mSort->mergeSort(vec, 0, vec->size() - 1);
 
             std::cout << "[Menu] finished! Result will be printed below: \n\n\n";
 

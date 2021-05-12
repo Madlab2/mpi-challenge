@@ -32,13 +32,13 @@ TEST (MergeSortTestBench, testMergeSort) {
 
     auto mSort = std::make_unique<MergeSort>();
 
-    auto words = std::make_shared<std::vector<std::string>>(IO::readStringsFromFile("./ExampleTexts/text1.txt"));
+    auto words = std::make_shared<std::vector<std::string>>(IO::readStringsFromFile("../test/ExampleTexts/text1.txt"));
 
     //TODO: throws segmentation fault with empty files!
-    mSort->mergeSort(std::move(words), 0, words->size() - 1);
+    mSort->mergeSort(words, 0, words->size() - 1);
     
     //read in solution
-    auto groundTrouth = std::make_shared<std::vector<std::string>>(IO::readStringsFromFile("./ExampleSolutions/solution1.txt"));
+    auto groundTrouth = std::make_shared<std::vector<std::string>>(IO::readStringsFromFile("../test/ExampleSolutions/solution1.txt"));
     
     //Check lenghts
     ASSERT_EQ(words->size(), groundTrouth->size());

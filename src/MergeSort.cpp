@@ -14,10 +14,10 @@ void MergeSort::mergeSort(std::shared_ptr<std::vector<std::string>> vec, int sta
     if (start < end) {
         int center = start + (end - start) / 2;
 
-        mergeSort(std::move(vec), start, center);
-        mergeSort(std::move(vec), center + 1, end);
+        mergeSort(vec, start, center);
+        mergeSort(vec, center + 1, end);
 
-        merge(std::move(vec), start, center, end);
+        merge(vec, start, center, end);
     }
 
 }
