@@ -31,28 +31,20 @@ TEST (MergeSortTestBench, testMerge) {
 TEST (MergeSortTestBench, testMergeSort) {
 
     auto mSort = std::make_unique<MergeSort>();
-
-    auto words = std::make_shared<std::vector<std::string>>(IO::readStringsFromFile("../test/ExampleTexts/text1.txt"));
+    //we are at build/test and go to test/ExampleTexts/
+    auto words = std::make_shared<std::vector<std::string>>(IO::readStringsFromFile("../../test/ExampleTexts/text1.txt"));
 
     //TODO: throws segmentation fault with empty files!
     mSort->mergeSort(words, 0, words->size() - 1);
     
     //read in solution
-    auto groundTrouth = std::make_shared<std::vector<std::string>>(IO::readStringsFromFile("../test/ExampleSolutions/solution1.txt"));
+    auto groundTrouth = std::make_shared<std::vector<std::string>>(IO::readStringsFromFile("../../test/ExampleSolutions/solution1.txt"));
     
     //Check lenghts
     ASSERT_EQ(words->size(), groundTrouth->size());
     EXPECT_NE(words->size(), 0);
-
-    //Checck contents (ordering)
-    /* sadly not possible
-    for (auto& resultWord = words->begin(), auto& solutionWord = groundTrouth->begin(); resultWord != words->end(), solutionWord != groundTrouth->end(); ++resultWord, ++solutionWord) {
-        
-        EXPECT_EQ(*resultWord, *solutionWord);
-
-    }
-    */
     
+    //check order
     for(int element = 0; element < words->size(); ++element) {
 
         EXPECT_EQ(words->at(element), groundTrouth->at(element));

@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 
+#include <chrono>
 
 #include "MergeSort.hpp"
 #include "InOutFuncs.hpp"
@@ -19,9 +20,11 @@ int main() {
 
     std::string input;
     
-    std::cout << "[Menu] Enter a pah to a text file below or 'exit':" << std::endl;
+    
 
     while(true) {
+        
+        std::cout << "[Menu] Enter a pah to a text file below or 'exit':" << std::endl;
 
         std::getline(std::cin, input);
 
@@ -32,10 +35,13 @@ int main() {
 
         } else {
 
-            std::cout << "[Menu] starting merge sort on file " << input << " ..." << std::endl;
+            std::cout << "[Menu] Reading in file " << input << " ..." << std::endl;
             
             auto vec = std::make_shared<std::vector<std::string>>(IO::readStringsFromFile(input));
 
+            std::cout << "[Menu] starting merge sort on file " << input << " ..." << std::endl;
+
+            //TODO: start time measurement
             mSort->mergeSort(vec, 0, vec->size() - 1);
 
             std::cout << "[Menu] finished! Result will be printed below: \n\n\n";
