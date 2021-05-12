@@ -15,11 +15,11 @@
 int main() {
 
     auto mSort = std::make_unique<MergeSort>();
-    
+
 
     std::string input;
     
-    std::cout << "Enter a pah to a text file below or 'exit':" << std::endl;
+    std::cout << "[Menu] Enter a pah to a text file below or 'exit':" << std::endl;
 
     while(true) {
 
@@ -27,12 +27,12 @@ int main() {
 
         if (input == "exit") {
 
-            std::cout << "exiting.." << std::endl;
+            std::cout << "[Menu] exiting.." << std::endl;
             break;
 
         } else {
 
-            std::cout << "starting merge sort on file " << input << " ..." << std::endl;
+            std::cout << "[Menu] starting merge sort on file " << input << " ..." << std::endl;
             
             auto vec = std::make_shared<std::vector<std::string>>(IO::readStringsFromFile(input));
 
