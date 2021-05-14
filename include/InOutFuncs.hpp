@@ -31,7 +31,19 @@ namespace IO {
         std::cout << outstream.str();
     }
 
-
+    void printVectorToFile(std::shared_ptr<std::vector<std::string>> vec) {
+        std::ofstream outputFile;
+        outputFile.open("output.txt");
+        if (!outputFile.is_open()) {
+            std::cout << "[IO] Could not open output file." << std::endl;
+            return;
+        }
+        for (const auto& value : *vec) {
+            outputFile << value << DELIMITER;
+        }
+        outputFile.close();
+        return;
+    }
 
     std::vector<std::string> readStringsFromFile(std::string filename) {
 
@@ -57,18 +69,14 @@ namespace IO {
 
         size_t pos = 0;
         std::string substr;
+        const char* delimiter = DELIMITER;
 
-        while ((pos = inputString.find(DELIMITER)) != std::string::npos) {
-
-            substr = inputString.substr(0, pos);
-            vec.push_back(substr);
-            inputString.erase(0, pos + 1);
+        std::string token;
+        std::istringstream tokenStream(inputString);
+        while (std::getline(tokenStream, token, *delimiter))
+        {
+            vec.push_back(token);
         }
-
-        if (inputString.length() > 0) {
-            vec.push_back(inputString);
-        }
-        
         return vec;
     }
     
