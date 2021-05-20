@@ -55,7 +55,7 @@ int main() {
             std::cout << "[Menu] (time elapsed: " << elapsed.count() << "ms) finished!" << std::endl;
 
             //IO::printVector(vec);
-
+            //IO::printVectorToFile(vec);
             //wil automatically delete vec a this point as going out of scope
 
         }
