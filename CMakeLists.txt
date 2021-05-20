@@ -29,16 +29,23 @@ include_directories(
     include
 )
 
-#will import test lib
+
+# adding openmpi and making it required
+find_package(MPI REQUIRED)
+
+
+#import test lib
 add_subdirectory(test)
 
+
+#add lib for io functions (header only, thus INTERFACE)
 add_library(io_lib INTERFACE)
 
 target_include_directories(io_lib INTERFACE
     include
 )
 
-#library that contains the src for the entire project
+#poject library that contains the src for the entire project
 add_library(mpiChallenge_lib STATIC
     src/MergeSort.cpp
 )
@@ -46,6 +53,7 @@ add_library(mpiChallenge_lib STATIC
 
 target_link_libraries(mpiChallenge_lib
     io_lib
+    MPI::MPI_CXX    #links mpi to projec lib
 )
 
 add_executable(main 
