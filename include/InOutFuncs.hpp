@@ -9,7 +9,7 @@
 #include <sstream>
 
 
-//; --> csv-files?
+//currently, files we read in must have ";" as delimiter between words 
 #define DELIMITER ";"
 
 
@@ -51,13 +51,14 @@ namespace IO {
             return vec;
         }
 
-
+        //read in the file
         inputFile >> inputString;
         inputFile.close();
 
         size_t pos = 0;
         std::string substr;
 
+        //split the file along defined delimiter
         while ((pos = inputString.find(DELIMITER)) != std::string::npos) {
 
             substr = inputString.substr(0, pos);
@@ -65,6 +66,7 @@ namespace IO {
             inputString.erase(0, pos + 1);
         }
 
+        //adding last element
         if (inputString.length() > 0) {
             vec.push_back(inputString);
         }
