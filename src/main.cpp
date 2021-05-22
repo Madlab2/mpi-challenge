@@ -4,42 +4,18 @@
 #include <memory>
 #include <vector>
 
+
 #include <chrono>
 #include <mpi.h>
 
 #include "MergeSort.hpp"
 #include "InOutFuncs.hpp"
+#include "HelperFuncs.hpp"
 
 
-//TODO
-//gets a size of a one-dimensional set and the number of substets (of similar sizes) the set shall be splittet up into
-//returns vector of pairs containing begin and end indices of every subset
-std::vector<std::pair<size_t, size_t>> split_even(int size_to_split, int num_splits) {
-
-    //from stackoverflow
-    /*
-    for(size_t i = 0; i < vec.size(); i += world_size) {
-
-        auto last = std::min(vec.size(), i + world_size);
-        
-        auto index = i / world_size;
-        auto& vec = bunches[index];
-
-        vec.reserve(last - i);
-
-        std::move(strings.begin() + i, strings.begin() + last, std::back_inserter(vec));
-
-    }
-    */
-    
-
-    //eg. for 5 Elements splitted in two parts: {(0, 1), (2,4)}
-    std::vector<std::pair<size_t, size_t>> result;
-
-    return result;
-}
 
 
+/*
 void slaveMerge(std::shared_ptr<MPI_Status> status, std::shared_ptr<MPI_Rank> rank, std::shared_ptr<int> world_size) {
 
     auto mSort = std::make_unique<MergeSort>();
@@ -117,7 +93,7 @@ std::shared_ptr<std::vector<std::string>> masterMerge(std::shared_ptr<std::vecto
     return result;
 
 }
-
+*/
 
 //TODO: How to pass MPI context to other functions? 
 int main(int argc, char **argv) {
@@ -141,7 +117,7 @@ int main(int argc, char **argv) {
 
     if(rank != 0) { //slave
 
-        slaveMerge(std::make_shared<MPI_Status> status, std::make_shared<MPI_Length> length, std::make_shared<MPI_Rank> rank, std::make_shared<int> world_size);
+        //slaveMerge(std::make_shared<MPI_Status> status, std::make_shared<MPI_Length> length, std::make_shared<MPI_Rank> rank, std::make_shared<int> world_size);
     
     } else {    //master, menu shall run only on ONE of all nodes (=> node 0)
 
@@ -172,10 +148,9 @@ int main(int argc, char **argv) {
                 
                 std::cout << "[Menu] (time elapsed: " << elapsed.count() << "ms) Starting merge sort on file " << input << " ..." << std::endl;
 
-
                 start = std::chrono::system_clock::now();
-                auto merged_vec = masterMerge(std::shared_ptr<std::vector<std::string>> vec_to_merge, 
-                    std::make_shared<MPI_Status> status, std::make_shared<MPI_Length> length, std::make_shared<MPI_Rank> rank, std::make_shared<int> world_size);
+                //auto merged_vec = masterMerge(std::shared_ptr<std::vector<std::string>> vec_to_merge, 
+                //    std::make_shared<MPI_Status> status, std::make_shared<MPI_Length> length, std::make_shared<MPI_Rank> rank, std::make_shared<int> world_size);
 				end = std::chrono::system_clock::now();
 
                 elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
