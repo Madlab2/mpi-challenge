@@ -45,11 +45,10 @@ namespace IO {
         return;
     }
 
-    std::vector<std::string> readStringsFromFile(std::string filename) {
+    void readStringsFromFile(std::string filename, std::vector<std::string> &buffer) {
 
        
         std::string inputString;
-        std::vector<std::string> vec;
 
         std::ifstream inputFile;
         
@@ -60,7 +59,7 @@ namespace IO {
             //could not open file
             // vec size is 0
             std::cout << "[IO] Could not open file." << std::endl;
-            return vec;
+            return;
         }
 
         //read in the file
@@ -75,9 +74,8 @@ namespace IO {
         std::istringstream tokenStream(inputString);
         while (std::getline(tokenStream, token, *delimiter))
         {
-            vec.push_back(token);
+            buffer.push_back(token);
         }
-        return vec;
     }
     
 } // namespace IO
