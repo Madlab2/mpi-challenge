@@ -4,7 +4,7 @@ This is the repository for Group 3's solution to the mpi challenge of the lectur
 
 See instructions below for building and starting the appplication.
 
-When you are in the programme, type `strg+c` or `èxit` to leave.
+When you are in the programme, type `strg+c` or `exit` to leave.
 
 #### Requirements
 - CMake

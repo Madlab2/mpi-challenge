@@ -1,12 +1,12 @@
 #include <iostream>
+#include <chrono>
 #include <string>
-#include <algorithm>
+
 #include <memory>
 #include <vector>
 #include <deque>
 
 
-#include <chrono>
 #include <mpi.h>
 
 #include "MergeSort.hpp"
@@ -14,87 +14,6 @@
 #include "HelperFuncs.hpp"
 
 
-
-
-/*
-void slaveMerge(std::shared_ptr<MPI_Status> status, std::shared_ptr<MPI_Rank> rank, std::shared_ptr<int> world_size) {
-
-    auto mSort = std::make_unique<MergeSort>();
-
-    int length;
-
-    //reveive length of vector from master
-    MPI_Recv(&length, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
-    
-    //construct vector with given length and a ptr to it
-    std::vector<std::string> vec(length);
-
-    auto vec_ptr = std::make_shared(vec);
-
-    //reveive vector from master
-    //vec_ptr points to first element
-    MPI_Recv(vec_ptr, length, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
-
-    //merge sort the vector received from master
-    mSort->mergeSort(vec_ptr, 0, length - 1);
-
-    //send back the sorted vector to master
-    //dereference vec_ptr gives content of vec at element 0
-    MPI_Send(*vec_ptr, length, MPI_INT, 0, 777, MPI_COMM_WORLD);
-
-}
-
-
-std::shared_ptr<std::vector<std::string>> masterMerge(std::shared_ptr<std::vector<std::string>> vec_to_merge, 
-    std::shared_ptr<MPI_Status> status, std::shared_ptr<MPI_Rank> rank, std::shared_ptr<int> world_size) {
-
-
-    auto mSort = std::make_unique<MergeSort>();
-
-    auto result = std::make_shared<std::vector<std::string>>();
-
-
-    // split vector                
-    auto boundaries = split_even(vec.size(), *world_size);
-
-
-    //Send size and contents of vectors to slave nodes
-    for(int i = 0; i < boundaries.size(); i++) {
-        
-        int begin = boundaries.at(i).first;
-        int end = boundaries.at(i).second;
-
-        int length = end - begin;
-
-        MPI_Send(length, 1, MPI_INT, i+1, 666, MPI_COMM_WORLD);
-        MPI_Send(&vec[begin], length , MPI_CHAR, i+1, 777, MPI_COMM_WORLD);
-    }
-
-
-    std::vector<std::vector<std::string>> sub_vecs;
-
-    // receive sorted vectors from slaves (do we wait for each sender synchronously?)
-    for(int i = 0; i < world_size; i++) {
-        
-        int begin = boundaries.at(i).first;
-        int end = boundaries.at(i).second;
-
-        int length = end - begin;
-
-        std::vector<std::string> temp_vec(length);
-        
-        MPI_Recv(&temp_vec, length, MPI_CHAR, MPI_ANY_SOURCE, 777, MPI_COMM_WORLD, &status);
-
-        sub_vecs.push_back(temp_vec);
-    }
-
-    //TODO: merge recursively backwards on master node using void merge() ( eg. from 8 sorted vecs to a single one)
-    //result = merge_back(sub_vecs);
-
-    return result;
-
-}
-*/
 
 
 
@@ -118,14 +37,14 @@ int main(int argc, char **argv) {
     //Some info output
     std::cout << "Hello, MPI! Rank: " << rank << " size " << world_size << " on " << name << std::endl;
 
-    //_________________________________________________________________________________________________________
-    //                              S  L   A   V   E 
-    //_________________________________________________________________________________________________________
-
+    
     if(rank != 0) { //slave
-
+        //_________________________________________________________________________________________________________
+        //                              S  L   A   V   E 
+        //_________________________________________________________________________________________________________
         //slaveMerge(std::make_shared<MPI_Status> status, std::make_shared<MPI_Length> length, std::make_shared<MPI_Rank> rank, std::make_shared<int> world_size);
 
+        
         auto mSort = std::make_unique<MergeSort>();
 
         int length;
@@ -256,7 +175,7 @@ int main(int argc, char **argv) {
 
 
                 // merge recursively backwards on master node using void merge() ( eg. from 8 sorted vecs to a single one)
-                merge_back(vecs_from_slaves);
+                mSort->merge_back(vecs_from_slaves);
 
                 auto result = vecs_from_slaves.begin();              
 
@@ -276,46 +195,3 @@ int main(int argc, char **argv) {
     return 0;    
 
 }
-
-/*
-    Splitten die Vectoren durch n 
-    [nvecs]
-
-    for Schleife bzw. Scatter
-
-    for Schleife bzw. Gather 
-
-    [nsortedvecs]
-
-    while ([nsortedvecs].size > 1) {
-        vec merge(sortedvec1, sortedvec2)
-        merge(merge, 0, sortedvec1.end(), merge.end());
-        [mergesortedvecs]
-    }
-
-    newSortedVecs = nsortedVecs;
-
-
-    while (counter < n/2) {
-        
-        while ( i < (n/2) +1) {
-            newSortedvecs.at(i) = merge(newSortedvec_i, newSortedvec_i+1)
-        }
-
-        counter++;
-    }
-    
-    
-
-
-vec[vec1, vec2, ..., vec4];
-std::map m = {(vec1.at(0), 0), (vec2.at(0), 1), ...};
-vec_beginnings = {vec1.at(0), vec2.at(0), ...}
-mSort->mergeSort(vec_beginnings, 0, vec->size() - 1);
-
-vec = m.at(vec_beginnings.at(0)) + m.at(vec_beginnings.at(1)) + ...
-
-
-
-*/
-

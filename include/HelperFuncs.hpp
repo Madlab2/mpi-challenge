@@ -1,11 +1,11 @@
 #pragma once
-#include <vector>
-#include <memory>
-#include <deque>
+
+
 #include <assert.h>
 #include <iostream>
 
-#include "MergeSort.hpp"
+#include <vector>
+
 
 
 //gets a size of a one-dimensional set and the number of substets (of similar sizes) the set shall be splittet up into
@@ -60,47 +60,89 @@ std::vector<std::pair<size_t, size_t>> split_even(const size_t size_to_split, co
 
     assert(result.size() == num_splits);
 
-
     return result;
 }
 
 
-void merge_back(std::deque<std::vector<std::string>> & vecs_to_merge) {
+/*
+void slaveMerge(std::shared_ptr<MPI_Status> status, std::shared_ptr<MPI_Rank> rank, std::shared_ptr<int> world_size) {
 
-    /*
-    1 2 3 4 5 6
-    3 4 5 6 1*
-    5 6 1* 3*
-    1* 3* 5*
-    5* 1** 
-    5**      --> return
-    */
     auto mSort = std::make_unique<MergeSort>();
 
-    int left = 0;
+    int length;
+
+    //reveive length of vector from master
+    MPI_Recv(&length, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
     
-    while (vecs_to_merge.size() > 1) {
-        
-        size_t size_vec1 = vecs_to_merge.at(0).size();
-        size_t size_vec2 = vecs_to_merge.at(1).size();
+    //construct vector with given length and a ptr to it
+    std::vector<std::string> vec(length);
 
-        int center = size_vec1 - 1;
-        int right = size_vec1 + size_vec2 - 1;
-        
-        //concatenate first and second vector in vecs_to_merge to one vector (will be merged in merge())
-        std::vector<std::string> vec_to_merge = *vecs_to_merge.begin();
-        vec_to_merge.insert(vec_to_merge.end(), (*(vecs_to_merge.begin() + 1)).begin(), (*(vecs_to_merge.begin() + 1)).end());
+    auto vec_ptr = std::make_shared(vec);
 
-        auto vec_to_merge_ptr = std::make_shared<std::vector<std::string>>(vec_to_merge);
+    //reveive vector from master
+    //vec_ptr points to first element
+    MPI_Recv(vec_ptr, length, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
-        //remove 
-        vecs_to_merge.pop_front();
-        vecs_to_merge.pop_front();
-        
-        mSort->merge(vec_to_merge_ptr, left, center, right);
+    //merge sort the vector received from master
+    mSort->mergeSort(vec_ptr, 0, length - 1);
 
-        //push back sorted vector of strings
-        vecs_to_merge.push_back(*vec_to_merge_ptr);
-    }
-    
+    //send back the sorted vector to master
+    //dereference vec_ptr gives content of vec at element 0
+    MPI_Send(*vec_ptr, length, MPI_INT, 0, 777, MPI_COMM_WORLD);
+
 }
+
+
+std::shared_ptr<std::vector<std::string>> masterMerge(std::shared_ptr<std::vector<std::string>> vec_to_merge, 
+    std::shared_ptr<MPI_Status> status, std::shared_ptr<MPI_Rank> rank, std::shared_ptr<int> world_size) {
+
+
+    auto mSort = std::make_unique<MergeSort>();
+
+    auto result = std::make_shared<std::vector<std::string>>();
+
+
+    // split vector                
+    auto boundaries = split_even(vec.size(), *world_size);
+
+
+    //Send size and contents of vectors to slave nodes
+    for(int i = 0; i < boundaries.size(); i++) {
+        
+        int begin = boundaries.at(i).first;
+        int end = boundaries.at(i).second;
+
+        int length = end - begin;
+
+        MPI_Send(length, 1, MPI_INT, i+1, 666, MPI_COMM_WORLD);
+        MPI_Send(&vec[begin], length , MPI_CHAR, i+1, 777, MPI_COMM_WORLD);
+    }
+
+
+    std::vector<std::vector<std::string>> sub_vecs;
+
+    // receive sorted vectors from slaves (do we wait for each sender synchronously?)
+    for(int i = 0; i < world_size; i++) {
+        
+        int begin = boundaries.at(i).first;
+        int end = boundaries.at(i).second;
+
+        int length = end - begin;
+
+        std::vector<std::string> temp_vec(length);
+        
+        MPI_Recv(&temp_vec, length, MPI_CHAR, MPI_ANY_SOURCE, 777, MPI_COMM_WORLD, &status);
+
+        sub_vecs.push_back(temp_vec);
+    }
+
+    //TODO: merge recursively backwards on master node using void merge() ( eg. from 8 sorted vecs to a single one)
+    //result = merge_back(sub_vecs);
+
+    return result;
+
+}
+*/
+
+
+

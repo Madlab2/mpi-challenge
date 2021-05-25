@@ -1,12 +1,17 @@
 #pragma once
 
+
 #include <iostream>
+#include <fstream>
+
+#include <sstream>
 #include <string>
+
 #include <algorithm>
+
 #include <memory>
 #include <vector>
-#include <fstream>
-#include <sstream>
+
 
 
 //currently, files we read in must have ";" as delimiter between words 
