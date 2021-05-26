@@ -44,6 +44,37 @@ TEST (MergeSortTestBench, testMergeSort) {
 
 }
 
+TEST (MergeSortTestBench, testMergeBack) {
+
+    auto mSort = std::make_unique<MergeSort>();
+
+    int num_slaves = 4;
+
+    std::vector<std::string> sorted_1{"Hallo", "hier", "Morgen", "numpy"};
+    std::vector<std::string> sorted_2{"Sigmund", "Tor", "Unimog", "Xilinx"};
+    std::vector<std::string> sorted_3{"3d", "Adalbert", "das", "der", "die"};
+    std::vector<std::string> sorted_4{"3d", "Samuel", "witzig"};
+
+    //storage for result vectors
+    std::deque<std::vector<std::string>> sorted_vecs{sorted_1, sorted_2, sorted_3, sorted_4};
+
+    mSort->merge_back(sorted_vecs);
+
+    std::vector<std::string> expected_result{"3d", "3d", "Adalbert", "das", "der", 
+                                            "die", "Hallo", "hier", "Morgen", "numpy", 
+                                            "Samuel", "Sigmund", "Tor", "Unimog", "witzig", "Xilinx"};
+    
+
+    EXPECT_EQ(expected_result.size(), (sorted_vecs.front()).size());
+
+    //check order
+    for(int element = 0; element < expected_result.size(); ++element) {
+
+        EXPECT_EQ(expected_result.at(element), (sorted_vecs.front()).at(element));
+    }
+
+}
+
 
 int main(int argc, char **argv) {
 

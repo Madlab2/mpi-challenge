@@ -177,7 +177,8 @@ int main(int argc, char **argv) {
                 // merge recursively backwards on master node using void merge() ( eg. from 8 sorted vecs to a single one)
                 mSort->merge_back(vecs_from_slaves);
 
-                auto result = vecs_from_slaves.begin();              
+                // extract result. Is the first vector in a std::deque of vectors
+                auto result = vecs_from_slaves.front();              
 
 				end = std::chrono::system_clock::now();
 
