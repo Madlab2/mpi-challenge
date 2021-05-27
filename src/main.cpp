@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
     //Some info output
     std::cout << "Hello, MPI! Rank: " << rank << " size " << world_size << " on " << name << std::endl;
 
-    
+    /*
     if(rank != 0) { //slave
         //_________________________________________________________________________________________________________
         //                              S  L   A   V   E 
@@ -189,7 +189,7 @@ int main(int argc, char **argv) {
             }
 
         }
-    }
+    }*/
 
     MPI_Finalize();
 
