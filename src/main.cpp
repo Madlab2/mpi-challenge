@@ -54,9 +54,6 @@ int main(int argc, char **argv) {
         //reveive length of vector from master
         MPI_Recv(&length, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
 
-        std::cout << "[Worker] Slave " << rank << " running on " << name << ": Length received." << std::endl;
-
-
         //construct vector with given length
         std::vector<std::string> vec(length);
 
@@ -64,12 +61,12 @@ int main(int argc, char **argv) {
         //vec_ptr points to first element
         MPI_Recv(&vec, length, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
-        std::cout << "[Worker] Slave " << rank << " running on " << name << ": Data received." << std::endl;
-
-
+        std::cout << "[Worker] Slave " << rank << " running on " << name << ": Length and Data received." << std::endl;
 
         //ptr to vec
         auto vec_ptr = std::make_shared<std::vector<std::string>>(vec);
+
+        std::cout << "[Worker] Slave " << rank << " running on " << name << ": ptr to vec constructed. Starting local merge..." << std::endl;
 
         //merge sort the vector received from master
         mSort->mergeSort(vec_ptr, 0, length - 1);
