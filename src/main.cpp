@@ -62,9 +62,9 @@ int main(int argc, char **argv) {
         //reveive vector from master
         //vec_ptr points to first element
         //MPI_Recv(&vec, length, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
-        std::string test;
+        char test;
 
-        MPI_Recv(&test, 80, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
+        MPI_Recv(&test, 1, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
         std::cout << "[Worker] Slave " << rank << " running on " << name << ": Length and Data received." << std::endl;
 
@@ -167,12 +167,12 @@ int main(int argc, char **argv) {
                     // ID 0 is Master, slaves begin from 1 (hence the offset)
                     int slave_id = i + 1;
 
-                    std::string test("hallihallo");
+                    char test = 'h';
 
                     MPI_Send(&length, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
                     std::cout << "[Master] sent length " << length << " to slave " << slave_id << std::endl;
                     //MPI_Send(string_to_sort[begin].c_str(), length , MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
-                    MPI_Send(test.c_str(), test.size() , MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
+                    MPI_Send(test, 1 , MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
                     std::cout << "[Master] sent data to slave " << slave_id << std::endl;
                 }
 
