@@ -34,23 +34,28 @@ int main(int argc, char **argv) {
     MPI_Comm_size(MPI_COMM_WORLD, &world_size);
     MPI_Get_processor_name(name, &length);
 
-    //Some info output
-    std::cout << "Hello, MPI! Rank: " << rank << " size " << world_size << " on " << name << std::endl;
-
     
+    // TODO: slaves will turn off after one iteration!!! (there is no while loop)
+    // implement using shutwodn flag sent from master
     if(rank != 0) { //slave
         //_________________________________________________________________________________________________________
         //                              S  L   A   V   E 
         //_________________________________________________________________________________________________________
         //slaveMerge(std::make_shared<MPI_Status> status, std::make_shared<MPI_Length> length, std::make_shared<MPI_Rank> rank, std::make_shared<int> world_size);
 
-        
+        //Some info output
+        std::cout << "Hello from slave " << rank << ". World-size: " << world_size << ". Running on " << name << std::endl;
+
+
         auto mSort = std::make_unique<MergeSort>();
 
         int length;
 
         //reveive length of vector from master
         MPI_Recv(&length, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
+
+        std::cout << "Slave " << rank << " running on " << name << ": Length received." << std::endl;
+
 
         //construct vector with given length
         std::vector<std::string> vec(length);
@@ -59,16 +64,27 @@ int main(int argc, char **argv) {
         //vec_ptr points to first element
         MPI_Recv(&vec, length, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
+        std::cout << "Slave " << rank << " running on " << name << ": Data received." << std::endl;
+
+
+
         //ptr to vec
         auto vec_ptr = std::make_shared<std::vector<std::string>>(vec);
 
         //merge sort the vector received from master
         mSort->mergeSort(vec_ptr, 0, length - 1);
 
+        std::cout << "Slave " << rank << " running on " << name << ": merge sorted." << std::endl;
+
+
         MPI_Send(&length, 1, MPI_INT, 0, 666, MPI_COMM_WORLD);
+
+        std::cout << "Slave " << rank << " running on " << name << ": sent back length." << std::endl;
         //send back the sorted vector to master
         //dereference vec_ptr gives content of vec at element 0
         MPI_Send(&vec, length, MPI_INT, 0, 777, MPI_COMM_WORLD);
+
+        std::cout << "Slave " << rank << " running on " << name << ": sent back data." << std::endl;
     
     } 
     
@@ -84,20 +100,20 @@ int main(int argc, char **argv) {
 
         while(true) {
 
-            std::cout << "[Menu] Enter a path to a text file below or 'exit':" << std::endl;
+            std::cout << "[Master] Enter a path to a text file below or 'exit':" << std::endl;
 
             std::getline(std::cin, input);
 
             if (input == "exit") {
 
-                std::cout << "[Menu] exiting.." << std::endl;
+                std::cout << "[Master] exiting.." << std::endl;
                 break;
 
             } else {
 
                 //TODO: extract this whole scope to function void masterMerge(std::string input)
 
-                std::cout << "[Menu] Reading in file " << input << " ..." << std::endl;
+                std::cout << "[Master] Reading in file " << input << " ..." << std::endl;
                 
                 
                 std::vector<std::string> string_to_sort;
@@ -109,7 +125,7 @@ int main(int argc, char **argv) {
 
                 auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
                 
-                std::cout << "[Menu] (time elapsed: " << elapsed.count() << "ms) Starting merge sort on file " << input << " ..." << std::endl;
+                std::cout << "[Master] (time elapsed: " << elapsed.count() << "ms) Starting distributed merge sort on file " << input << " ..." << std::endl;
                 
 
 
@@ -131,6 +147,8 @@ int main(int argc, char **argv) {
                 //boundaries.size() is guaranteed to be euqal to world size (or ==1 if world_size < 1)
                 auto boundaries = split_even(string_to_sort.size(), num_slaves);
 
+                std::cout << "[Master] boundaries calculated. " << std::endl;
+
 
                 //Send size and contents of vectors to slave nodes
                 for(int i = 0; i < num_slaves; i++) {
@@ -144,7 +162,9 @@ int main(int argc, char **argv) {
                     int slave_id = i + 1;
 
                     MPI_Send(&length, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
+                    std::cout << "[Master] sent lenght to slave " << slave_id << std::endl;
                     MPI_Send(&string_to_sort, length , MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
+                    std::cout << "[Master] sent data to slave " << slave_id << std::endl;
                 }
 
                 //storage for result vectors
@@ -168,14 +188,18 @@ int main(int argc, char **argv) {
                     
                     //receive sorted vector from slave
                     MPI_Recv(&vec, length, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD, &status);
+                    std::cout << "[Master] received lenght from slave " << slave_id << std::endl;
 
                     //TODO: revise, do not copy
                     vecs_from_slaves.emplace(vecs_from_slaves.begin() + i, std::move(vec));
+                    std::cout << "[Master] received data from slave " << slave_id << std::endl;
                 }
 
 
                 // merge recursively backwards on master node using void merge() ( eg. from 8 sorted vecs to a single one)
                 mSort->merge_back(vecs_from_slaves);
+
+                std::cout << "[Master] merged slave results." << std::endl;
 
                 // extract result. Is the first vector in a std::deque of vectors
                 auto result = vecs_from_slaves.front();              
@@ -184,7 +208,7 @@ int main(int argc, char **argv) {
 
                 elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-                std::cout << "[Menu] (time elapsed: " << elapsed.count() << "ms) finished!" << std::endl;
+                std::cout << "[Master] (time elapsed: " << elapsed.count() << "ms) Finished distributed merge!" << std::endl;
 
             }
 
