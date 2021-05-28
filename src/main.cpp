@@ -168,8 +168,6 @@ int main(int argc, char **argv) {
                     int slave_id = i + 1;
 
                     std::string test("hallihallo");
-                    
-                    auto new_vec = string_to_sort.c_string();
 
                     MPI_Send(&length, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
                     std::cout << "[Master] sent length " << length << " to slave " << slave_id << std::endl;
