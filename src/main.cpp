@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
         //slaveMerge(std::make_shared<MPI_Status> status, std::make_shared<MPI_Length> length, std::make_shared<MPI_Rank> rank, std::make_shared<int> world_size);
 
         //Some info output
-        std::cout << "Hello from slave " << rank << ". World-size: " << world_size << ". Running on " << name << std::endl;
+        std::cout << "[Worker] Hello from slave " << rank << ". World-size: " << world_size << ". Running on " << name << std::endl;
 
 
         auto mSort = std::make_unique<MergeSort>();
@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
         //reveive length of vector from master
         MPI_Recv(&length, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
 
-        std::cout << "Slave " << rank << " running on " << name << ": Length received." << std::endl;
+        std::cout << "[Worker] Slave " << rank << " running on " << name << ": Length received." << std::endl;
 
 
         //construct vector with given length
@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
         //vec_ptr points to first element
         MPI_Recv(&vec, length, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
-        std::cout << "Slave " << rank << " running on " << name << ": Data received." << std::endl;
+        std::cout << "[Worker] Slave " << rank << " running on " << name << ": Data received." << std::endl;
 
 
 
@@ -74,17 +74,17 @@ int main(int argc, char **argv) {
         //merge sort the vector received from master
         mSort->mergeSort(vec_ptr, 0, length - 1);
 
-        std::cout << "Slave " << rank << " running on " << name << ": merge sorted." << std::endl;
+        std::cout << "[Worker] Slave " << rank << " running on " << name << ": merge sorted." << std::endl;
 
 
         MPI_Send(&length, 1, MPI_INT, 0, 666, MPI_COMM_WORLD);
 
-        std::cout << "Slave " << rank << " running on " << name << ": sent back length." << std::endl;
+        std::cout << "[Worker] Slave " << rank << " running on " << name << ": sent back length." << std::endl;
         //send back the sorted vector to master
         //dereference vec_ptr gives content of vec at element 0
         MPI_Send(&vec, length, MPI_INT, 0, 777, MPI_COMM_WORLD);
 
-        std::cout << "Slave " << rank << " running on " << name << ": sent back data." << std::endl;
+        std::cout << "[Worker] Slave " << rank << " running on " << name << ": sent back data." << std::endl;
     
     } 
     
