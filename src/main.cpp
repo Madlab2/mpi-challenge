@@ -66,9 +66,10 @@ int main(int argc, char **argv) {
         //ptr to vec (move constructor)
         auto vec_ptr = std::make_shared<std::vector<std::string>>(std::move(vec));
 
+        std::cout << "[Worker] Slave " << rank << " running on " << name << ": vector.size(), length:" << vec_ptr->size() << ", " << length << std::endl;
 
         std::cout << "[Worker] Slave " << rank << " running on " << name << ": ptr to vec constructed. Starting local merge..." << std::endl;
-
+       
         //merge sort the vector received from master
         mSort->mergeSort(vec_ptr, 0, length - 1);
 
