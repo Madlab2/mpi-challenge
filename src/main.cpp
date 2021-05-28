@@ -172,7 +172,7 @@ int main(int argc, char **argv) {
                     MPI_Send(&length, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
                     std::cout << "[Master] sent length " << length << " to slave " << slave_id << std::endl;
                     //MPI_Send(string_to_sort[begin].c_str(), length , MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
-                    MPI_Send(test, 1 , MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
+                    MPI_Send(&test, 1 , MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
                     std::cout << "[Master] sent data to slave " << slave_id << std::endl;
                 }
 
