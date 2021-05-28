@@ -63,8 +63,9 @@ int main(int argc, char **argv) {
 
         std::cout << "[Worker] Slave " << rank << " running on " << name << ": Length and Data received." << std::endl;
 
-        //ptr to vec
-        auto vec_ptr = std::make_shared<std::vector<std::string>>(vec);
+        //ptr to vec (move constructor)
+        auto vec_ptr = std::make_shared<std::vector<std::string>>(std::move(vec));
+
 
         std::cout << "[Worker] Slave " << rank << " running on " << name << ": ptr to vec constructed. Starting local merge..." << std::endl;
 
