@@ -49,31 +49,42 @@ int main(int argc, char **argv) {
 
         auto mSort = std::make_unique<MergeSort>();
 
-        int length;
+        int length_word = 0;
+        int num_words = 0;
 
-        //reveive length of vector from master
-        MPI_Recv(&length, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
+        //reveive number of words to be received from master
+        MPI_Recv(&num_words, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
 
         //construct vector with given length
-        std::vector<std::string> vec(length);
+        std::vector<std::string> vec(num_words);
 
-        std::cout << "[Worker] Slave " << rank << " running on " << name << ": vector.size() = " << vec.size() << ", length = " << length << std::endl;
+        std::cout << "[Worker] Slave " << rank << " running on " << name << std::endl;
         
+
+        for (int word = 0; word < num_words; word++) {
+
+            MPI_Recv(&length_word, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
+            
+            char buf[length_word];
+            MPI_Recv(&buf, 1, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
+			std::cout << "[Worker] String: " << std::string(buf) << std::endl;
+			vec.emplace(vec.begin() + word, std::move(std::string(buf)));
+		}
+
+		
         //reveive vector from master
         //vec_ptr points to first element
         //MPI_Recv(&vec, length, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
-        char test;
-
-        MPI_Recv(&test, 1, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
+        //char test;
+        
+        //MPI_Recv(buf, 1, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
         std::cout << "[Worker] Slave " << rank << " running on " << name << ": Length and Data received." << std::endl;
 
-        std::cout << "[Worker] string test: " << test << std::endl;
+        //std::cout << "[Worker] string test: " << test << std::endl;
 
         //ptr to vec (move constructor)
         auto vec_ptr = std::make_shared<std::vector<std::string>>(std::move(vec));
-
-        std::cout << "[Worker] Slave " << rank << " running on " << name << ": vector.size() = " << vec.size() << ", length = " << length << std::endl;
 
         std::cout << "[Worker] Slave " << rank << " running on " << name << ": ptr to vec constructed. Starting local merge..." << std::endl;
        
@@ -167,12 +178,26 @@ int main(int argc, char **argv) {
                     // ID 0 is Master, slaves begin from 1 (hence the offset)
                     int slave_id = i + 1;
 
-                    char test = 'h';
+                    int word_size = 0;
+                    
+                    std::cout << "[Master] sending " << length << " words to slave " << slave_id << std::endl;
+                    for (int word = begin; word <= end; word++) {
+                        
+                        //send length of word
+                        word_size = string_to_sort.at(word).size();
+                        MPI_Send(&word_size, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
 
-                    MPI_Send(&length, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
+                        //send chars of word in ONE char array
+                        MPI_Send(string_to_sort.at(word).c_str(), word_size, MPI::CHAR, slave_id, 1, MPI_COMM_WORLD);
+                        
+                    }
+                    
+                    //char test = 'h';
+
+                    //MPI_Send(&length, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
                     std::cout << "[Master] sent length " << length << " to slave " << slave_id << std::endl;
                     //MPI_Send(string_to_sort[begin].c_str(), length , MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
-                    MPI_Send(&test, 1 , MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
+                    //MPI_Send(&test, 1 , MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
                     std::cout << "[Master] sent data to slave " << slave_id << std::endl;
                 }
 
