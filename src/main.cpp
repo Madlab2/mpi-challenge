@@ -66,6 +66,9 @@ int main(int argc, char **argv) {
             MPI_Recv(&length_word, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
             
             char buf[length_word];
+
+            std::cout << "[Worker] Length received: " << length_word << std::endl;
+            
             MPI_Recv(&buf, 1, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
 			std::cout << "[Worker] String: " << std::string(buf) << std::endl;
