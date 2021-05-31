@@ -189,7 +189,7 @@ int main(int argc, char **argv) {
                         MPI_Send(&word_size, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
 
                         //send chars of word in ONE char array
-                        MPI_Send(string_to_sort.at(word).c_str(), word_size, MPI::CHAR, slave_id, 1, MPI_COMM_WORLD);
+                        MPI_Send(string_to_sort.at(word).c_str(), word_size, MPI_CHAR, slave_id, 1, MPI_COMM_WORLD);
                         
                     }
                     
