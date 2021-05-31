@@ -191,6 +191,8 @@ int main(int argc, char **argv) {
                         word_size = string_to_sort.at(word).size();
                         MPI_Send(&word_size, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
 
+                        std::cout << "[Master] sent length:" << word_size << " to slave " << slave_id << std::endl;
+                        
                         char to_send[word_size];
                         strcpy(to_send, string_to_sort.at(word).c_str());
                         //send chars of word in ONE char array
@@ -201,7 +203,7 @@ int main(int argc, char **argv) {
                     //char test = 'h';
 
                     //MPI_Send(&length, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
-                    std::cout << "[Master] sent length " << length << " to slave " << slave_id << std::endl;
+                    std::cout << "[Master] sent " << length << "words to slave " << slave_id << std::endl;
                     //MPI_Send(string_to_sort[begin].c_str(), length , MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
                     //MPI_Send(&test, 1 , MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
                     std::cout << "[Master] sent data to slave " << slave_id << std::endl;
