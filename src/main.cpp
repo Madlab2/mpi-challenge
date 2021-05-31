@@ -1,6 +1,6 @@
 #include <iostream>
 #include <chrono>
-#include <string>
+#include <string.h>
 
 #include <memory>
 #include <vector>
@@ -67,6 +67,7 @@ int main(int argc, char **argv) {
             
             char buf[length_word];
             MPI_Recv(&buf, 1, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
+
 			std::cout << "[Worker] String: " << std::string(buf) << std::endl;
 			vec.emplace(vec.begin() + word, std::move(std::string(buf)));
 		}
@@ -182,7 +183,7 @@ int main(int argc, char **argv) {
                     
                     std::cout << "[Master] sending " << length << " words to slave " << slave_id << std::endl;
                     for (int word = begin; word <= end; word++) {
-                        
+
                         //send length of word
                         word_size = string_to_sort.at(word).size();
                         MPI_Send(&word_size, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
