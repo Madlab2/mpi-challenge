@@ -49,31 +49,33 @@ int main(int argc, char **argv) {
 
         auto mSort = std::make_unique<MergeSort>();
 
-        int length_word = 0;
+        int word_size = 0;
         int num_words = 0;
 
         //reveive number of words to be received from master
         MPI_Recv(&num_words, 1, MPI_INT, 0, 555, MPI_COMM_WORLD, &status);
 
         //construct vector with given length
-        std::vector<std::string> vec(num_words);
-
+        //std::vector<std::string> vec(num_words);
+        std::vector<std::string> vec;
         std::cout << "[Worker] Slave " << rank << " running on " << name  << " is going to receive " << num_words << " words." << std::endl;
         
 
         for (int word = 0; word < num_words; word++) {
 
-            MPI_Recv(&length_word, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
+            MPI_Recv(&word_size, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
             
-            char * buf = new char[length_word];
+            char * buf = new char[word_size];
 
-            std::cout << "[Worker] Length of word received: " << length_word << std::endl;
+            std::cout << "[Worker] Length of word received: " << word_size << std::endl;
             
-            MPI_Recv(buf, length_word, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
+            MPI_Recv(buf, word_size, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
 			std::cout << "[Worker] Received word: " << std::string(buf) << std::endl;
 
-			vec.emplace(vec.begin() + word, std::move(std::string(buf)));
+			//vec.emplace(vec.begin() + word, std::move(std::string(buf)));
+            //vec.assign()
+            vec.push_back(std::string(buf));
 
             delete[] buf;
 		}
@@ -96,17 +98,34 @@ int main(int argc, char **argv) {
         std::cout << "[Worker] Slave " << rank << " running on " << name << ": ptr to vec constructed. Starting local merge..." << std::endl;
        
         //merge sort the vector received from master
-        mSort->mergeSort(vec_ptr, 0, length - 1);
+        mSort->mergeSort(vec_ptr, 0, num_words - 1);
 
         std::cout << "[Worker] Slave " << rank << " running on " << name << ": merge sorted." << std::endl;
 
-
-        MPI_Send(&length, 1, MPI_INT, 0, 666, MPI_COMM_WORLD);
+        //sending back result to Master
+        MPI_Send(&num_words, 1, MPI_INT, 0, 555, MPI_COMM_WORLD);
 
         std::cout << "[Worker] Slave " << rank << " running on " << name << ": sent back length." << std::endl;
-        //send back the sorted vector to master
-        //dereference vec_ptr gives content of vec at element 0
-        MPI_Send(&vec, length, MPI_INT, 0, 777, MPI_COMM_WORLD);
+
+        for (int word = 0; word < num_words; word++) {
+
+            //send length of word
+            word_size = vec_ptr->at(word).size() + 1;
+            MPI_Send(&word_size, 1, MPI_INT, 0, 666, MPI_COMM_WORLD);
+
+            std::cout << "[Worker] sent length: " << word_size << " to Master." << std::endl;
+            
+            char * to_send = new char[word_size];
+            strcpy(to_send, vec_ptr->at(word).c_str());
+
+            //send chars of word in ONE char array
+            MPI_Send(to_send, word_size, MPI_CHAR, 0, 777, MPI_COMM_WORLD);
+
+            std::cout << "[Worker] sent word " << to_send << " to Master." << std::endl;
+
+            delete[] to_send;
+            
+        }
 
         std::cout << "[Worker] Slave " << rank << " running on " << name << ": sent back data." << std::endl;
     
@@ -212,7 +231,6 @@ int main(int argc, char **argv) {
                         
                     }
                     
-                    //char test = 'h';
 
                     //MPI_Send(&length, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
                     std::cout << "[Master] sent " << length << "words to slave " << slave_id << std::endl;
@@ -222,30 +240,50 @@ int main(int argc, char **argv) {
                 }
 
                 //storage for result vectors
-                std::deque<std::vector<std::string>> vecs_from_slaves(num_slaves);
+                //std::deque<std::vector<std::string>> vecs_from_slaves(num_slaves);
+                std::deque<std::vector<std::string>> vecs_from_slaves;
 
 
                 // receive sorted vectors from slaves (do we wait for each sender synchronously?)
                 for(int i = 0; i < num_slaves; i++) {
 
-                    int length = 0;
+                    int num_words = 0;
 
                     // ID 0 is Master, slaves begin from 1 (hence the offset)
                     int slave_id = i + 1;
 
-                    //reveive length of vector from master
-                    MPI_Recv(&length, 1, MPI_INT, slave_id , 666, MPI_COMM_WORLD, &status);
+                    //reveive number of words from slaves
+                    MPI_Recv(&num_words, 1, MPI_INT, slave_id , 555, MPI_COMM_WORLD, &status);
+                    
 
                     //create vector for slave result, to be stored in sub_vecs
-                    std::vector<std::string> vec(length);
-                    //auto temp_vec = std::make_shared<std::vector<std::string>> (vec);
+                    std::vector<std::string> vec;
+                    std::cout << "[Master] Going to receive " << num_words << " words." << std::endl;
                     
-                    //receive sorted vector from slave
-                    MPI_Recv(&vec, length, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD, &status);
-                    std::cout << "[Master] received lenght from slave " << slave_id << std::endl;
+                    //receive all words by one slave
+                    for (int word = 0; word < num_words; word++) {
+
+                        MPI_Recv(&world_size, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD, &status);
+                        
+                        char * buf = new char[world_size];
+
+                        std::cout << "[Worker] Length of word received: " << world_size << std::endl;
+                        
+                        MPI_Recv(buf, world_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD, &status);
+
+                        std::cout << "[Worker] Received word: " << std::string(buf) << std::endl;
+
+                        //vec.emplace(vec.begin() + word, std::move(std::string(buf)));
+                        //vec.assign()
+                        vec.push_back(std::string(buf));
+
+                        delete[] buf;
+                    }
+                    
 
                     //TODO: revise, do not copy
-                    vecs_from_slaves.emplace(vecs_from_slaves.begin() + i, std::move(vec));
+                    //vecs_from_slaves.emplace(vecs_from_slaves.begin() + i, std::move(vec));
+                    vecs_from_slaves.push_back(vec);
                     std::cout << "[Master] received data from slave " << slave_id << std::endl;
                 }
 
