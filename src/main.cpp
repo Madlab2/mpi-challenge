@@ -67,11 +67,11 @@ int main(int argc, char **argv) {
             
             char * buf = new char[word_size];
 
-            std::cout << "[Worker] Length of word received: " << word_size << std::endl;
+            //std::cout << "[Worker] Length of word received: " << word_size << std::endl;
             
             MPI_Recv(buf, word_size, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
-			std::cout << "[Worker] Received word: " << std::string(buf) << std::endl;
+			//std::cout << "[Worker] Received word: " << std::string(buf) << std::endl;
 
 			//vec.emplace(vec.begin() + word, std::move(std::string(buf)));
             //vec.assign()
