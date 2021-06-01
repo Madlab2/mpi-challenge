@@ -65,15 +65,17 @@ int main(int argc, char **argv) {
 
             MPI_Recv(&length_word, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
             
-            char buf[length_word];
+            char * buf = new char[length_word];
 
             std::cout << "[Worker] Length received: " << length_word << std::endl;
             
-            MPI_Recv(&buf, length_word, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
+            MPI_Recv(buf, length_word, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
 			std::cout << "[Worker] Received word: " << std::string(buf) << std::endl;
 
 			vec.emplace(vec.begin() + word, std::move(std::string(buf)));
+
+            delete[] buf;
 		}
 
 		
@@ -202,6 +204,8 @@ int main(int argc, char **argv) {
                         MPI_Send(to_send, word_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
 
                         std::cout << "[Master] sent word " << to_send << " to slave " << slave_id << std::endl;
+
+                        delete[] to_send;
                         
                     }
                     
