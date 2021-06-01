@@ -71,7 +71,8 @@ int main(int argc, char **argv) {
             
             MPI_Recv(&buf, 1, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
-			std::cout << "[Worker] String: " << std::string(buf) << std::endl;
+			std::cout << "[Worker] Received word: " << std::string(buf) << std::endl;
+            
 			vec.emplace(vec.begin() + word, std::move(std::string(buf)));
 		}
 
@@ -193,10 +194,14 @@ int main(int argc, char **argv) {
 
                         std::cout << "[Master] sent length:" << word_size << " to slave " << slave_id << std::endl;
                         
-                        char to_send[word_size];
-                        strcpy(to_send, string_to_sort.at(word).c_str());
+                        //char to_send[word_size];
+                        //strcpy(to_send, string_to_sort.at(word).c_str());
+
+                        char to_send[word_size] = {'b', 'l', 'a'};
                         //send chars of word in ONE char array
                         MPI_Send(&to_send, word_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
+
+                        std::cout << "[Master] sent word " << to_send << " to slave " << slave_id << std::endl;
                         
                     }
                     
