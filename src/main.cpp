@@ -299,7 +299,7 @@ int main(int argc, char **argv) {
                     std::cout << "[Master] result.size() = " << result.size() << std::endl;
                     for(int i = 0; i < result.size(); i++){
 
-                        std::cout << result.at(0) << std::endl;
+                        std::cout << result.at(i) << std::endl;
                         
                     }
                     //IO::printVector(std::make_shared<std::vector<std::string>>(result));
