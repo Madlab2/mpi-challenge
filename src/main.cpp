@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
 
             std::cout << "[Worker] Length received: " << length_word << std::endl;
             
-            MPI_Recv(&buf, 1, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
+            MPI_Recv(&buf, length_word, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
 			std::cout << "[Worker] Received word: " << std::string(buf) << std::endl;
 
@@ -192,7 +192,7 @@ int main(int argc, char **argv) {
                         word_size = string_to_sort.at(word).size() + 1;
                         MPI_Send(&word_size, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
 
-                        std::cout << "[Master] sent length:" << word_size << " to slave " << slave_id << std::endl;
+                        std::cout << "[Master] sent length: " << word_size << " to slave " << slave_id << std::endl;
                         
                         char * to_send = new char[word_size];
                         strcpy(to_send, string_to_sort.at(word).c_str());
