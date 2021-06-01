@@ -22,12 +22,9 @@ namespace IO {
     
     //TODO: add optional arg to write to file path if provided and not print out
     void printVector(std::shared_ptr<std::vector<std::string>> vec) {
-        /*
-        for (unsigned int i = 0; i < vec.size(); i++) {
-            std::cout << vec[i] << EOL;
-        }
-        */
+       
         std::stringstream outstream;
+        
         //using iterators or short for loop
         for (auto& word : *vec) {
             outstream << word << std::endl;

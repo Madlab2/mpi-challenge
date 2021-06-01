@@ -296,7 +296,13 @@ int main(int argc, char **argv) {
 
                 if(input == "p") {
                     
-                    IO::printVector(std::make_shared<std::vector<std::string>>(result));
+                    std::cout << "[Master] result.size() = " << result.size() << std::endl;
+                    for(int i = 0; i < result.size(); i++){
+
+                        std::cout << result.at(0) << std::endl;
+                        
+                    }
+                    //IO::printVector(std::make_shared<std::vector<std::string>>(result));
                     
                 } else if (input == "f") {
 
