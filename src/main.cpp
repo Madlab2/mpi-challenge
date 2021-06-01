@@ -81,22 +81,14 @@ int main(int argc, char **argv) {
 		}
 
 		
-        //reveive vector from master
-        //vec_ptr points to first element
-        //MPI_Recv(&vec, length, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
-        //char test;
+       
         
-        //MPI_Recv(buf, 1, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
-        std::cout << "[Worker] Slave " << rank << " running on " << name << ": Length and Data received." << std::endl;
-
-        //std::cout << "[Worker] string test: " << test << std::endl;
+        std::cout << "[Worker] Slave " << rank << " running on " << name << ": Length and Data received. Starting local merge..." << std::endl;
 
         //ptr to vec (move constructor)
         auto vec_ptr = std::make_shared<std::vector<std::string>>(std::move(vec));
 
-        std::cout << "[Worker] Slave " << rank << " running on " << name << ": ptr to vec constructed. Starting local merge..." << std::endl;
-       
         //merge sort the vector received from master
         mSort->mergeSort(vec_ptr, 0, num_words - 1);
 
@@ -105,15 +97,16 @@ int main(int argc, char **argv) {
         //sending back result to Master
         MPI_Send(&num_words, 1, MPI_INT, 0, 555, MPI_COMM_WORLD);
 
-        std::cout << "[Worker] Slave " << rank << " running on " << name << ": sent back length." << std::endl;
+        std::cout << "[Worker] Slave " << rank << " running on " << name << ": sent back length to Master." << std::endl;
 
+        //Sending data back to Master
         for (int word = 0; word < num_words; word++) {
 
             //send length of word
             word_size = vec_ptr->at(word).size() + 1;
             MPI_Send(&word_size, 1, MPI_INT, 0, 666, MPI_COMM_WORLD);
 
-            std::cout << "[Worker] sent length: " << word_size << " to Master." << std::endl;
+            //std::cout << "[Worker] sent length: " << word_size << " to Master." << std::endl;
             
             char * to_send = new char[word_size];
             strcpy(to_send, vec_ptr->at(word).c_str());
@@ -121,13 +114,13 @@ int main(int argc, char **argv) {
             //send chars of word in ONE char array
             MPI_Send(to_send, word_size, MPI_CHAR, 0, 777, MPI_COMM_WORLD);
 
-            std::cout << "[Worker] sent word " << to_send << " to Master." << std::endl;
+            //std::cout << "[Worker] sent word " << to_send << " to Master." << std::endl;
 
             delete[] to_send;
             
         }
 
-        std::cout << "[Worker] Slave " << rank << " running on " << name << ": sent back data." << std::endl;
+        std::cout << "[Worker] Slave " << rank << " running on " << name << ": sent back data to Master." << std::endl;
     
     } 
     
@@ -216,27 +209,23 @@ int main(int argc, char **argv) {
                         word_size = string_to_sort.at(word).size() + 1;
                         MPI_Send(&word_size, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
 
-                        std::cout << "[Master] sent length: " << word_size << " to slave " << slave_id << std::endl;
+                        //std::cout << "[Master] sent length: " << word_size << " to slave " << slave_id << std::endl;
                         
                         char * to_send = new char[word_size];
                         strcpy(to_send, string_to_sort.at(word).c_str());
 
-                        //char to_send[word_size] = {'b', 'l', 'a'};
                         //send chars of word in ONE char array
                         MPI_Send(to_send, word_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
 
-                        std::cout << "[Master] sent word " << to_send << " to slave " << slave_id << std::endl;
+                        //std::cout << "[Master] sent word " << to_send << " to slave " << slave_id << std::endl;
 
                         delete[] to_send;
                         
                     }
                     
 
-                    //MPI_Send(&length, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
                     std::cout << "[Master] sent " << length << "words to slave " << slave_id << std::endl;
-                    //MPI_Send(string_to_sort[begin].c_str(), length , MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
-                    //MPI_Send(&test, 1 , MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
-                    std::cout << "[Master] sent data to slave " << slave_id << std::endl;
+                    
                 }
 
                 //storage for result vectors
@@ -252,7 +241,7 @@ int main(int argc, char **argv) {
                     // ID 0 is Master, slaves begin from 1 (hence the offset)
                     int slave_id = i + 1;
 
-                    //reveive number of words from slaves
+                    //receive number of words from slaves
                     MPI_Recv(&num_words, 1, MPI_INT, slave_id , 555, MPI_COMM_WORLD, &status);
                     
 
@@ -267,14 +256,13 @@ int main(int argc, char **argv) {
                         
                         char * buf = new char[world_size];
 
-                        std::cout << "[Worker] Length of word received: " << world_size << std::endl;
+                        //std::cout << "[Worker] Length of word received: " << world_size << std::endl;
                         
                         MPI_Recv(buf, world_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD, &status);
 
-                        std::cout << "[Worker] Received word: " << std::string(buf) << std::endl;
+                        //std::cout << "[Worker] Received word: " << std::string(buf) << std::endl;
 
                         //vec.emplace(vec.begin() + word, std::move(std::string(buf)));
-                        //vec.assign()
                         vec.push_back(std::string(buf));
 
                         delete[] buf;
@@ -288,7 +276,7 @@ int main(int argc, char **argv) {
                 }
 
 
-                // merge recursively backwards on master node using void merge() ( eg. from 8 sorted vecs to a single one)
+                // merge recursively backwards on master node using void merge() (eg. from 8 sorted vecs to a single one)
                 mSort->merge_back(vecs_from_slaves);
 
                 std::cout << "[Master] merged slave results." << std::endl;
@@ -301,6 +289,20 @@ int main(int argc, char **argv) {
                 elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
                 std::cout << "[Master] (time elapsed: " << elapsed.count() << "ms) Finished distributed merge!" << std::endl;
+
+                std::cout << "[Master] Press 'p' to print the result, 'f' to write it to file, 's' to skip" << std::endl;
+                
+                std::getline(std::cin, input);
+
+                if(input == "p") {
+                    
+                    IO::printVector(std::make_shared<std::vector<std::string>>(result));
+                    
+                } else if (input == "f") {
+
+                    IO::printVectorToFile(std::make_shared<std::vector<std::string>>(result));
+                    
+                }
 
             }
 
