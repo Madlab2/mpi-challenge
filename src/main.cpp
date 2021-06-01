@@ -53,12 +53,12 @@ int main(int argc, char **argv) {
         int num_words = 0;
 
         //reveive number of words to be received from master
-        MPI_Recv(&num_words, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
+        MPI_Recv(&num_words, 1, MPI_INT, 0, 555, MPI_COMM_WORLD, &status);
 
         //construct vector with given length
         std::vector<std::string> vec(num_words);
 
-        std::cout << "[Worker] Slave " << rank << " running on " << name << std::endl;
+        std::cout << "[Worker] Slave " << rank << " running on " << name  << " is going to receive " << num_words << " words." << std::endl;
         
 
         for (int word = 0; word < num_words; word++) {
@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
             
             char * buf = new char[length_word];
 
-            std::cout << "[Worker] Length received: " << length_word << std::endl;
+            std::cout << "[Worker] Length of word received: " << length_word << std::endl;
             
             MPI_Recv(buf, length_word, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
@@ -188,6 +188,9 @@ int main(int argc, char **argv) {
                     int word_size = 0;
                     
                     std::cout << "[Master] sending " << length << " words to slave " << slave_id << std::endl;
+
+                    MPI_Send(&length, 1, MPI_INT, slave_id, 555, MPI_COMM_WORLD);
+
                     for (int word = begin; word <= end; word++) {
 
                         //send length of word
