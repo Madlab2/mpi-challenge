@@ -9,4 +9,5 @@ done
 cd ../build
 cmake .. && make
 ctest -VV
+echo "This script took $SECONDS seconds to execute"
 mpirun -n 8 -host master-node,worker0,worker1,worker2,worker3,worker4,worker5,worker6 ./main
