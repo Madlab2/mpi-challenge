@@ -24,11 +24,11 @@ fi
 
 DIRECTORY="/home/ubuntu/mpi-challenge"
 if [ -d $DIRECTORY ]; then
-echco "_________________________Gefunden_________________________________________--"
+echo "_________________________Gefunden_________________________________________--"
 cd mpi-challenge/build
 git pull
 else
-echso "_________________________Muss kopiert werden_______________________________"
+echo "_________________________Muss kopiert werden_______________________________"
 git clone https://github.com/Madlab2/mpi-challenge.git
 cd mpi-challenge/build
 fi
