@@ -1,6 +1,6 @@
 git pull
 sudo chmod +x install.sh
-host="worker1 worker2"
+host='worker1 worker2'
 for h in host
 do
 echo "ubuntu@$h"
