@@ -1,9 +1,10 @@
 git pull
 sudo chmod +x install.sh
-for host in worker2 worker1
+host = "worker1 worker2"
+for h in host
 do
-echo "ubuntu@$host"
-ssh ubuntu@$host 'bash -s' < install.sh
+echo "ubuntu@$h"
+ssh ubuntu@$h 'bash -s' < install.sh
 done
 cd ../build
 cmake .. && make
