@@ -2,6 +2,7 @@ git pull
 sudo chmod +x install.sh
 for host in {worker2 worker1}
 do
+echo "ubuntu@$host"
 ssh ubuntu@$host 'bash -s' < install.sh
 done
 cd ../build
