@@ -1,14 +1,7 @@
 #!/bin/bash
-n=$1
-# make sure command line arguments are passed to the script
-if [ $# -eq 0 ]
-then
-	echo "Usage : $0 number"
-	exit 1
-fi
 git pull
 sudo chmod +x install.sh
-for h in $(seq 1 $n)
+for h in {0..5}
 do
 echo "ubuntu@$h"
 ssh ubuntu@worker$h 'bash -s' < install.sh
