@@ -22,7 +22,7 @@ if [ "" = "$PKG_OK" ]; then
   sudo apt-get --yes install openmpi-bin openmpi-doc libopenmpi-dev 
 fi
 
-dir = "home/mpi-challenge/"
+dir = "~/mpi-challenge/"
 if [ -d $dir ]; then
 echco "Gefunden"
 cd mpi-challenge/build
