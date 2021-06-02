@@ -23,7 +23,7 @@ if [ "" = "$PKG_OK" ]; then
 fi
 
 DIRECTORY = /home/ubuntu/mpi-challenge
-if [ -d "$DIRECTORY" ]; then
+if [ -d $DIRECTORY ]; then
 echco "_________________________Gefunden_________________________________________--"
 cd mpi-challenge/build
 git pull
