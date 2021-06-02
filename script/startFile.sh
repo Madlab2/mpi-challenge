@@ -5,6 +5,7 @@ for h in {0..6}
 do
 echo "ubuntu@worker$h"
 ssh ubuntu@worker$h 'bash -s' < install.sh &> /dev/null
+echo "This worker took $SECONDS seconds"
 done
 cd ../build
 cmake .. && make
