@@ -8,4 +8,4 @@ done
 cd ../build
 cmake .. && make
 ctest -VV
-mpirun -n 3 -host master-node, worker2, worker1 ./main
+mpirun -n 3 -host master-node,worker2,worker1 ./main
