@@ -21,9 +21,17 @@ if [ "" = "$PKG_OK" ]; then
   echo "No $REQUIRED_PKG. Setting up $REQUIRED_PKG."
   sudo apt-get --yes install openmpi-bin openmpi-doc libopenmpi-dev 
 fi
-rm -rf mpi-challenge
+
+dir = "home/mpi-challenge/"
+if [ -d $dir ]; then
+echco "Gefunden"
+cd mpi-challenge/build
+git pull
+else
+echso "Muss copiert werden"
 git clone https://github.com/Madlab2/mpi-challenge.git
 cd mpi-challenge/build
+fi
 git checkout dev
 cmake .. && make 
 ctest -VV
