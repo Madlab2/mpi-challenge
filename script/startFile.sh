@@ -3,7 +3,7 @@ git pull
 sudo chmod +x install.sh
 for h in {0..5}
 do
-echo "ubuntu@$h"
+echo "ubuntu@worker$h"
 ssh ubuntu@worker$h 'bash -s' < install.sh
 done
 cd ../build
