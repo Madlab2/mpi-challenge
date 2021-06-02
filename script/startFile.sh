@@ -8,7 +8,7 @@ then
 fi
 git pull
 sudo chmod +x install.sh
-for h in {0..2}
+for h in {0..$n}
 do
 echo "ubuntu@$h"
 ssh ubuntu@worker$h 'bash -s' < install.sh
