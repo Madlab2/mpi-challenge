@@ -22,13 +22,13 @@ if [ "" = "$PKG_OK" ]; then
   sudo apt-get --yes install openmpi-bin openmpi-doc libopenmpi-dev 
 fi
 
-dir = "~/mpi-challenge/"
+dir = "/home/ubuntu/mpi-challenge"
 if [ -d $dir ]; then
-echco "Gefunden"
+echco "_________________________Gefunden_________________________________________--"
 cd mpi-challenge/build
 git pull
 else
-echso "Muss copiert werden"
+echso "_________________________Muss kopiert werden_______________________________"
 git clone https://github.com/Madlab2/mpi-challenge.git
 cd mpi-challenge/build
 fi
