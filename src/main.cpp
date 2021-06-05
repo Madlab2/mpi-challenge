@@ -247,6 +247,8 @@ int main(int argc, char **argv) {
                     std::string temp = buffer.str();
 
                     int message_size = temp.size() + 1;
+		    
+		    std::cout << "[Master] sent length: " << message_size<< " to slave " << slave_id << std::endl;
 
                     char * to_send = new char[message_size];
                     strcpy(to_send, temp.c_str());
