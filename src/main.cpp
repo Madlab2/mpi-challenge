@@ -254,16 +254,13 @@ int main(int argc, char **argv) {
                     // send length of whole array
                     MPI_Send(&message_size + 1, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
 
-					//send word in ONE char array
-					MPI_Send(to_send, message_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
+		    //send word in ONE char array
+		    MPI_Send(to_send, message_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
 
-					//std::cout << "[Master] sent word " << to_send << " to slave " << slave_id << std::endl;
+		    //std::cout << "[Master] sent word " << to_send << " to slave " << slave_id << std::endl;
 
-					delete[] to_send;
-
-
-
-					std::cout << "[Master] sent " << length << "words to slave " << slave_id << std::endl;
+		    delete[] to_send;
+		    std::cout << "[Master] sent " << length << "words to slave " << slave_id << std::endl;
 
 				}
 
@@ -288,14 +285,14 @@ int main(int argc, char **argv) {
 					std::vector<std::string> words_to_sort;
 					// std::cout << "[Master] Going to receive " << num_words << " words." << std::endl;
 					std::cout << "[Master] sent length: " << message_size<< " to slave " << slave_id << std::endl;
-					MPI_Recv(&message_size, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
+					MPI_Recv(&message_size, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD, &status);
 
 
 					char * buf = new char[message_size];
 
 					//std::cout << "[Worker] Length of word received: " << word_size << std::endl;
 
-					MPI_Recv(buf, message_size, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
+					MPI_Recv(buf, message_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD, &status);
 
                     int begin_word = 0;     
 
