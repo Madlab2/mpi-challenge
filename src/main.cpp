@@ -234,33 +234,33 @@ int main(int argc, char **argv) {
 
 					//std::cout << "[Master] sent length: " << word_size << " to slave " << slave_id << std::endl;
 
-                    std::stringstream buffer;
-                    buffer << ";";
+                    			std::stringstream buffer;
+                    			buffer << ";";
 
-                    for (auto word = begin; word <= end; word++) {
+                    			for (auto word = begin; word <= end; word++) {
                         
-                        //";" is seperator marking begin of a word (";abc;...;wtf;")
-                        buffer << word << ";";
+                        		//";" is seperator marking begin of a word (";abc;...;wtf;")
+                        		buffer << word << ";";
 
-                    }
+                    			}
 
-                    std::string temp = buffer.str();
+                    			std::string temp = buffer.str();
 
-                    int message_size = temp.size() + 1;
+                    			int message_size = temp.size() + 1;
 
-                    char * to_send = new char[message_size];
-                    strcpy(to_send, temp.c_str());
-		    std::cout << "[Master] first MPI " << message_size << std::endl;
-                    // send length of whole array
-                    MPI_Send(&message_size + 1, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
+                    			char * to_send = new char[message_size];
+                    			strcpy(to_send, temp.c_str());
+		    			std::cout << "[Master] first MPI " << message_size << std::endl;
+                    			// send length of whole array
+                    			MPI_Send(&message_size + 1, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
 
-		    //send word in ONE char array
-		    MPI_Send(to_send, message_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
+		    			//send word in ONE char array
+		    			MPI_Send(to_send, message_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
 
-		    //std::cout << "[Master] sent word " << to_send << " to slave " << slave_id << std::endl;
+		   			//std::cout << "[Master] sent word " << to_send << " to slave " << slave_id << std::endl;
 
-		    delete[] to_send;
-		    std::cout << "[Master] sent " << length << "words to slave " << slave_id << std::endl;
+		  			delete[] to_send;
+		    			std::cout << "[Master] sent " << length << "words to slave " << slave_id << std::endl;
 
 				}
 
@@ -293,30 +293,30 @@ int main(int argc, char **argv) {
 
 					MPI_Recv(buf, message_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD, &status);
 
-                    int begin_word = 0;     
+                    			int begin_word = 0;     
 
 					for (int character = 0; character < message_size; character++) {
 			
-                        //";" is seperator marking begin of a word (";abc;...;wtf;")
-                        if (buf[character] == ';') {
+                        		//";" is seperator marking begin of a word (";abc;...;wtf;")
+                        		if (buf[character] == ';') {
                             
-                            if(character != 0) {
+                            			if(character != 0) {
 
-                                int index_new_word = 0;
-                                int size_new_word = character - begin_word;
-                                int end_word = character - 1;
+                                		int index_new_word = 0;
+                                		int size_new_word = character - begin_word;
+                                		int end_word = character - 1;
 
-                                char new_word[size_new_word];
+                                		char new_word[size_new_word];
 
-                                for (int word_character = begin_word; word_character < end_word; word_character++) {
+                                		for (int word_character = begin_word; word_character < end_word; word_character++) {
                                     
-                                    new_word[index_new_word] = buf[word_character];
-                                    index_new_word++;
-                                }
+                                    			new_word[index_new_word] = buf[word_character];
+                                    			index_new_word++;
+                                		}
 
-                                words_to_sort.push_back(std::string(new_word));
+                                	words_to_sort.push_back(std::string(new_word));
 
-                            }
+                            	}
                             //needs to be set in first iteration in order to "skip" the first ";"
                             begin_word = character + 1;
                         }
