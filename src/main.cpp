@@ -225,7 +225,7 @@ int main(int argc, char **argv) {
 
 					// ID 0 is Master, slaves begin from 1 (hence the offset)
 					int slave_id = i + 1;
-					int to_send_counter = 0
+					int to_send_counter = 0;
 					// int word_size = 0;
 
 					std::cout << "[Master] sending " << length << " chars to slave " << slave_id << std::endl;
@@ -246,7 +246,7 @@ int main(int argc, char **argv) {
 
                     std::string temp = buffer.str();
 
-                    message_size = temp.size() + 1;
+                    int message_size = temp.size() + 1;
 
                     char * to_send = new char[message_size];
                     strcpy(to_send, temp.c_str());
@@ -286,7 +286,7 @@ int main(int argc, char **argv) {
 
 					//create vector for slave result, to be stored in sub_vecs
 					std::vector<std::string> words_to_sort;
-					std::cout << "[Master] Going to receive " << num_words << " words." << std::endl;
+					// std::cout << "[Master] Going to receive " << num_words << " words." << std::endl;
 
 					MPI_Recv(&message_size, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
 
@@ -338,7 +338,7 @@ int main(int argc, char **argv) {
 
 					//TODO: revise, do not copy
 					//vecs_from_slaves.emplace(vecs_from_slaves.begin() + i, std::move(vec));
-					vecs_from_slaves.push_back(vec);
+					vecs_from_slaves.push_back(words_to_sort);
 					std::cout << "[Master] received data from slave " << slave_id << std::endl;
 				}
 
