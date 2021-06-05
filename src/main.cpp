@@ -284,7 +284,6 @@ int main(int argc, char **argv) {
 					//create vector for slave result, to be stored in sub_vecs
 					std::vector<std::string> words_to_sort;
 					// std::cout << "[Master] Going to receive " << num_words << " words." << std::endl;
-					std::cout << "[Master] sent length: " << message_size<< " to slave " << slave_id << std::endl;
 					MPI_Recv(&message_size, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD, &status);
 
 
