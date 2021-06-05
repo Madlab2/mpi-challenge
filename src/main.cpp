@@ -250,7 +250,7 @@ int main(int argc, char **argv) {
 
                     char * to_send = new char[message_size];
                     strcpy(to_send, temp.c_str());
-
+		    cout << "[Master] first MPI " << message_size << endl;
                     // send length of whole array
                     MPI_Send(&message_size + 1, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
 
