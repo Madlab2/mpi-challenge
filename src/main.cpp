@@ -247,10 +247,10 @@ int main(int argc, char **argv) {
                     			std::string temp = buffer.str();
 
                     			int message_size = temp.size() + 1;
-					std::cout << "[Master] first MPI " << message_size << std::endl;
+					std::cout << "[Master] MPI " <<  message_size << std::endl;
                     			char * to_send = new char[message_size];
                     			strcpy(to_send, temp.c_str());
-		    			std::cout << "[Master] first MPI2 " << message_size << std::endl;
+		    			std::cout << "[Master] MPI " <<  message_size  << " to slave " << slave_id << std::endl;
                     			// send length of whole array
                     			MPI_Send(&message_size + 1, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
 
