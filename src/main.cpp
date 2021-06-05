@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
 
 		auto mSort = std::make_unique<MergeSort>();
 
-		//int message_size = 0;
+		int message_size = 0;
 		int num_packages = 1;
 
 		//reveive number of packages to be received from master
