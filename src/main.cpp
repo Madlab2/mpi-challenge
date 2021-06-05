@@ -253,7 +253,8 @@ int main(int argc, char **argv) {
                     			strcpy(to_send, temp.c_str());
 		    			std::cout << "[Master] MPI " <<  message_size  << " to slave " << slave_id << std::endl;
                     			// send length of whole array
-                    			MPI_Send(&message_size + 1, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
+					message_size = message_size +1;
+                    			MPI_Send(&message_size, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
 
 		    			//send word in ONE char array
 		    			MPI_Send(to_send, message_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
