@@ -112,7 +112,6 @@ int main(int argc, char **argv) {
 
 		//ptr to vec (move constructor)
 		auto words_to_sort_ptr = std::make_shared<std::vector<std::string>>(std::move(words_to_sort));
-		std::cout << words_to_sort_ptr->at(0) << std::endl;
 
 		//merge sort the vector received from master
 		mSort->mergeSort(words_to_sort_ptr, 0, words_to_sort_ptr->size() - 1);
@@ -142,7 +141,6 @@ int main(int argc, char **argv) {
 		message_size = temp.size() + 1;
 
 		char * to_send = new char[message_size];
-		std::cout << to_send[0] << std::endl;
 		strcpy(to_send, temp.c_str());
 
 		MPI_Send(&message_size, 1, MPI_INT, 0, 666, MPI_COMM_WORLD);
