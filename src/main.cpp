@@ -1,7 +1,6 @@
 #include <iostream>
 #include <chrono>
 #include <string.h>
-#include <cstddef>
 
 #include <memory>
 #include <vector>
@@ -90,7 +89,7 @@ int main(int argc, char **argv) {
 						index_new_word++;
 					}
 					
-					if(new_word[size_new_word] == null)
+					if(new_word[size_new_word] == "")
 									      {
 									      	std::cout << "hier -> Worker" << rank << "  " << new_word[size_new_word] << " == " << buf[size_new_word] << std::endl;
 									      }
