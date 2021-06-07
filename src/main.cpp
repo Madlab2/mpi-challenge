@@ -127,7 +127,7 @@ int main(int argc, char **argv) {
 		std::stringstream buffer;
 		buffer << ";";
 
-		for (int i = 0; i < words_to_sort.size(); i++) {
+		for (int i = 0; i < words_to_sort_ptr->size(); i++) {
 			
 			//";" is seperator marking begin of a word (";abc;...;wtf;")
 			std::cout << words_to_sort_ptr->at(i) << std::endl;
