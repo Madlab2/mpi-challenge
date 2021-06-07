@@ -127,15 +127,15 @@ int main(int argc, char **argv) {
 		std::stringstream buffer;
 		buffer << ";";
 
-		for (std::string word : *words_to_sort_ptr) {
+		for (int i = 0; i < words_to_sort.size(); i++) {
 			
 			//";" is seperator marking begin of a word (";abc;...;wtf;")
-			buffer << word << ";";
+			std::cout << words_to_sort_ptr->at(i) << std::endl;
+			buffer << words_to_sort_ptr->at(i) << ";";
 
 		}
 
 		std::string temp = buffer.str();
-		std::cout << temp << std::endl;
 		message_size = temp.size() + 1;
 
 		char * to_send = new char[message_size];
