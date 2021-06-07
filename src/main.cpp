@@ -85,7 +85,6 @@ int main(int argc, char **argv) {
 					int end_word = character - 1;
 
 					char new_word[size_new_word];
-					std::cout << size_new_word << std::endl;
 					for (int word_character = begin_word; word_character < end_word; word_character++) {
 						
 						new_word[index_new_word] = buf[word_character];
@@ -93,7 +92,7 @@ int main(int argc, char **argv) {
 					}
 
 					words_to_sort.push_back(std::string(new_word));
-
+					delete[] new_word;
 				}
 				//needs to be set in first iteration in order to "skip" the first ";"
 				begin_word = character + 1;
