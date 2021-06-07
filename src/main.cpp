@@ -88,7 +88,13 @@ int main(int argc, char **argv) {
 						new_word[index_new_word] = buf[word_character];
 						index_new_word++;
 					}
-
+					
+					if(new_word[new_word.size()-1] != buf[end_word))
+									      {
+									      	std::cout << "hier -> Worker" << rank << "  " << new_word[new_word.size()-1] << " == " << buf[begin_word) << std::endl;
+									      }
+						
+						
 					words_to_sort.push_back(std::string(new_word));
 					delete[] new_word;
 				}
