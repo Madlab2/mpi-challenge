@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
 					
 					if(new_word[size_new_word+1] != '\0')
 									      {
-									      	std::cout << "hier -> Worker" << rank << "  " << new_word[size_new_word] << " == " << size_new_word << std::endl;
+									      	std::cout << "hier -> Worker" << begin_word << "--" << end_word << "  " << new_word[size_new_word] << " == " << size_new_word << std::endl;
 									      }
 						
 						
