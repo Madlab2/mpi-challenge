@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
 					int size_new_word = character - begin_word -1;
 					int end_word = character - 1;
 
-					char new_word[size_new_word];
+					char *new_word = new char[size_new_word];
 					for (int word_character = begin_word; word_character < end_word; word_character++) {
 						
 						new_word[index_new_word] = buf[word_character];
