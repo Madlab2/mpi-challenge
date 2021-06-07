@@ -72,7 +72,7 @@ int main(int argc, char **argv) {
 		MPI_Recv(buf, message_size, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
 		int begin_word = 0;
-		std::cout << buf->at(0) << std::endl;
+		std::cout << buf[0] << std::endl;
 
 		for (int character = 0; character < message_size; character++) {
 			
@@ -142,7 +142,7 @@ int main(int argc, char **argv) {
 		message_size = temp.size() + 1;
 
 		char * to_send = new char[message_size];
-		std::cout << buf->at(0) << std::endl;
+		std::cout << to_send[0] << std::endl;
 		strcpy(to_send, temp.c_str());
 
 		MPI_Send(&message_size, 1, MPI_INT, 0, 666, MPI_COMM_WORLD);
