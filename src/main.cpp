@@ -85,7 +85,6 @@ int main(int argc, char **argv) {
 					int size_new_word = character - begin_word;
 					int end_word = character - 1;
 
-					char new_word[size_new_word];
 					std::cout << new_word[0] << std::endl;
 
 					for (int word_character = begin_word; word_character < end_word; word_character++) {
