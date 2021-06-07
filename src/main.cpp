@@ -72,8 +72,6 @@ int main(int argc, char **argv) {
 		MPI_Recv(buf, message_size, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
 		int begin_word = 0;
-		
-		std::cout << buf[28] << std::endl;
 
 		for (int character = 0; character < message_size; character++) {
 			
@@ -83,11 +81,11 @@ int main(int argc, char **argv) {
 				if(character != 0) {
 
 					int index_new_word = 0;
-					int size_new_word = character - begin_word;
+					int size_new_word = character - begin_word -1;
 					int end_word = character - 1;
 
 					char new_word[size_new_word];
-
+					std::cout << size_new_word << std::endl;
 					for (int word_character = begin_word; word_character < end_word; word_character++) {
 						
 						new_word[index_new_word] = buf[word_character];
