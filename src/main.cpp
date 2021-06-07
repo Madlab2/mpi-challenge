@@ -72,6 +72,7 @@ int main(int argc, char **argv) {
 		MPI_Recv(buf, message_size, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
 		int begin_word = 0;
+		std::cout << buf[0] << std::endl;
 
 		for (int character = 0; character < message_size; character++) {
 			
@@ -85,6 +86,7 @@ int main(int argc, char **argv) {
 					int end_word = character - 1;
 
 					char new_word[size_new_word];
+					std::cout << new_word[0] << std::endl;
 
 					for (int word_character = begin_word; word_character < end_word; word_character++) {
 						
@@ -110,6 +112,7 @@ int main(int argc, char **argv) {
 
 		//ptr to vec (move constructor)
 		auto words_to_sort_ptr = std::make_shared<std::vector<std::string>>(std::move(words_to_sort));
+		std::cout << words_to_sort_ptr->at(0) << std::endl;
 
 		//merge sort the vector received from master
 		mSort->mergeSort(words_to_sort_ptr, 0, words_to_sort_ptr->size() - 1);
@@ -139,6 +142,7 @@ int main(int argc, char **argv) {
 		message_size = temp.size() + 1;
 
 		char * to_send = new char[message_size];
+		std::cout << buf->at(0) << std::endl;
 		strcpy(to_send, temp.c_str());
 
 		MPI_Send(&message_size, 1, MPI_INT, 0, 666, MPI_COMM_WORLD);
