@@ -72,7 +72,6 @@ int main(int argc, char **argv) {
 		MPI_Recv(buf, message_size, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
 		int begin_word = 0;
-		std::cout << buf[1] << std::endl;
 
 		for (int character = 0; character < message_size; character++) {
 			
@@ -251,6 +250,7 @@ int main(int argc, char **argv) {
                     			int message_size = temp.size() + 1;
 					std::cout << "[Master] MPI " <<  message_size << std::endl;
                     			char * to_send = new char[message_size];
+					
                     			strcpy(to_send, temp.c_str());
 		    			std::cout << "[Master] MPI " <<  message_size  << " to slave " << slave_id << std::endl;
                     			// send length of whole array
@@ -314,6 +314,7 @@ int main(int argc, char **argv) {
                                 		for (int word_character = begin_word; word_character < end_word; word_character++) {
                                     
                                     			new_word[index_new_word] = buf[word_character];
+							std::cout << buf[1] << "->" << new_word[1] << std::endl;
                                     			index_new_word++;
                                 		}
 
