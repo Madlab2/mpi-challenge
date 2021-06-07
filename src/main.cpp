@@ -130,6 +130,7 @@ int main(int argc, char **argv) {
 		for (std::string word : *words_to_sort_ptr) {
 			
 			//";" is seperator marking begin of a word (";abc;...;wtf;")
+			std::cout << word << std::endl;
 			buffer << word << ";";
 
 		}
@@ -240,12 +241,9 @@ int main(int argc, char **argv) {
                     			buffer << ";";
 
                     			for (auto word = begin; word <= end; word++) {
-                        		if(word == begin)
-					{
-						std::cout << string_to_sort[word] << std::endl;
-					}
+                      
                         		//";" is seperator marking begin of a word (";abc;...;wtf;")
-                        		buffer << word << ";";
+                        		buffer << string_to_sort[word] << ";";
 
                     			}
 
