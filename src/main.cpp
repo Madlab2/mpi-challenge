@@ -81,11 +81,11 @@ int main(int argc, char **argv) {
 				if(character != 0) {
 
 					int index_new_word = 0;
-					int size_new_word = character - begin_word -1;
+					int size_new_word = character - begin_word;
 					int end_word = character - 1;
 
 					char *new_word = new char[size_new_word];
-					for (int word_character = begin_word; word_character < end_word; word_character++) {
+					for (int word_character = begin_word; word_character <= end_word; word_character++) {
 						
 						new_word[index_new_word] = buf[word_character];
 						index_new_word++;
