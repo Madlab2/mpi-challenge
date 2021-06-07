@@ -236,7 +236,7 @@ int main(int argc, char **argv) {
 					//std::cout << "[Master] sent length: " << word_size << " to slave " << slave_id << std::endl;
 
                     			std::stringstream buffer;
-					std::cout << buffer << std::endl;
+					std::cout << begin << std::endl;
                     			buffer << ";";
 
                     			for (auto word = begin; word <= end; word++) {
