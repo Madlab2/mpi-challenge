@@ -242,10 +242,10 @@ int main(int argc, char **argv) {
                     			for (auto word = begin; word <= end; word++) {
                         		if(word == begin)
 					{
-						std::cout << boundaries.at(word) << std::endl;
+						std::cout << boundaries[word] << std::endl;
 					}
                         		//";" is seperator marking begin of a word (";abc;...;wtf;")
-                        		buffer << boundaries.at(word) << ";";
+                        		buffer << boundaries[word] << ";";
 
                     			}
 
