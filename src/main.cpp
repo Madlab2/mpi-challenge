@@ -109,6 +109,7 @@ int main(int argc, char **argv) {
 		std::cout << "[Worker] Slave " << rank << " running on " << name << ": Length and Data received. Starting local merge..." << std::endl;
 
 		//ptr to vec (move constructor)
+		std::cout << words_to_sort[1] << std::endl;
 		auto words_to_sort_ptr = std::make_shared<std::vector<std::string>>(std::move(words_to_sort));
 
 		//merge sort the vector received from master
@@ -130,7 +131,6 @@ int main(int argc, char **argv) {
 		for (std::string word : *words_to_sort_ptr) {
 			
 			//";" is seperator marking begin of a word (";abc;...;wtf;")
-			std::cout << word << std::endl;
 			buffer << word << ";";
 
 		}
