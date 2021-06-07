@@ -89,9 +89,9 @@ int main(int argc, char **argv) {
 						index_new_word++;
 					}
 					
-					if(new_word[size_new_word] != buf[end_word])
+					if(new_word[size_new_word] != buf[size_new_word])
 									      {
-									      	std::cout << "hier -> Worker" << rank << "  " << new_word[size_new_word] << " == " << buf[begin_word] << std::endl;
+									      	std::cout << "hier -> Worker" << rank << "  " << new_word[size_new_word] << " == " << buf[size_new_word] << std::endl;
 									      }
 						
 						
