@@ -109,7 +109,7 @@ int main(int argc, char **argv) {
 		std::cout << "[Worker] Slave " << rank << " running on " << name << ": Length and Data received. Starting local merge..." << std::endl;
 
 		//ptr to vec (move constructor)
-		std::cout << words_to_sort[1] << std::endl;
+		std::cout << words_to_sort[0] << std::endl;
 		auto words_to_sort_ptr = std::make_shared<std::vector<std::string>>(std::move(words_to_sort));
 
 		//merge sort the vector received from master
