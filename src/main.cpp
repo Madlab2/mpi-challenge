@@ -309,16 +309,16 @@ int main(int argc, char **argv) {
                                 		int size_new_word = character - begin_word;
                                 		int end_word = character - 1;
 
-                                		char new_word[size_new_word];
+                                		char *new_word = new char[size_new_word];
 
-                                		for (int word_character = begin_word; word_character < end_word; word_character++) {
+                                		for (int word_character = begin_word; word_character <= end_word; word_character++) {
                                     
                                     			new_word[index_new_word] = buf[word_character];
                                     			index_new_word++;
                                 		}
 
                                 	words_to_sort.push_back(std::string(new_word));
-
+					delete [] new_word;
                             	}
                             //needs to be set in first iteration in order to "skip" the first ";"
                             begin_word = character + 1;
