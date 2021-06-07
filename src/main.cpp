@@ -65,9 +65,7 @@ int main(int argc, char **argv) {
 
 
 		std::cout << "[Worker] Length of word received: " << message_size << std::endl;
-		char *buf = new char[message_size];
-
-		
+		char *buf = new char[message_size];		
 
 		MPI_Recv(buf, message_size, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
@@ -84,8 +82,7 @@ int main(int argc, char **argv) {
 					int size_new_word = character - begin_word;
 					int end_word = character - 1;
 
-					//char *new_word = new char[size_new_word];
-					char new_word[size_new_word];
+					char *new_word = new char[size_new_word];
 					for (int word_character = begin_word; word_character <= end_word; word_character++) {
 						
 						new_word[index_new_word] = buf[word_character];
@@ -93,7 +90,7 @@ int main(int argc, char **argv) {
 					}
 
 					words_to_sort.push_back(std::string(new_word));
-					//delete[] new_word;
+					delete[] new_word;
 				}
 				//needs to be set in first iteration in order to "skip" the first ";"
 				begin_word = character + 1;
@@ -222,7 +219,7 @@ int main(int argc, char **argv) {
 					int begin = boundaries.at(i).first;
 					int end = boundaries.at(i).second;
 
-					int length = end - begin + 1;
+					int length = end - begin +1;
 
 					// ID 0 is Master, slaves begin from 1 (hence the offset)
 					int slave_id = i + 1;
