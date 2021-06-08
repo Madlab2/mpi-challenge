@@ -89,10 +89,6 @@ int main(int argc, char **argv) {
 						index_new_word++;
 					}
 					
-					if(new_word[size_new_word+1] != '\0')
-									      {
-									      	std::cout << "hier -> Worker" << sizeof (new_word) << "--" << end_word << "  " << new_word[size_new_word] << " == " << size_new_word << std::endl;
-									      }
 						
 						
 					words_to_sort.push_back(std::string(new_word));
