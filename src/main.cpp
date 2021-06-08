@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
 
 		MPI_Recv(buf, message_size, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
 
-		int begin_word = 0;
+		int begin_word = 1;
 
 		for (int character = 0; character < message_size; character++) {
 			
@@ -251,12 +251,9 @@ int main(int argc, char **argv) {
 					
                     			std::string temp = buffer.str();
                     			int message_size = temp.size() + 1;
-					std::cout << "[Master] MPI " <<  message_size << std::endl;
                     			char * to_send = new char[message_size];
 					
                     			strcpy(to_send, temp.c_str());
-					std::cout << to_send[28] << std::endl;
-		    			std::cout << "[Master] MPI " <<  message_size  << " to slave " << slave_id << std::endl;
                     			// send length of whole array
 					message_size = message_size +1;
                     			MPI_Send(&message_size, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
