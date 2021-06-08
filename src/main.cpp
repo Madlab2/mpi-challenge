@@ -248,9 +248,9 @@ int main(int argc, char **argv) {
                         		buffer << string_to_sort[word] << ";";
 
                     			}
-
+					
                     			std::string temp = buffer.str();
-
+					std::cout << temp << std::endl;
                     			int message_size = temp.size() + 1;
 					std::cout << "[Master] MPI " <<  message_size << std::endl;
                     			char * to_send = new char[message_size];
