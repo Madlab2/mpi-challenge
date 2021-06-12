@@ -111,7 +111,6 @@ int main(int argc, char **argv) {
 		//merge sort the vector received from master
 		mSort->mergeSort(words_to_sort_ptr, 0, words_to_sort_ptr->size() - 1);
 
-		std::cout << words_to_sort_ptr->at(28) << std::endl;
 		std::cout << "[Worker] Slave " << rank << " running on " << name << ": merge sorted." << std::endl;
 
 		//sending back result to Master
