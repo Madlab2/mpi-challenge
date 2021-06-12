@@ -60,11 +60,10 @@ int main(int argc, char **argv) {
 		std::vector<std::string> words_to_sort;
 		std::cout << "[Worker] Slave " << rank << " running on " << name << " is going to receive " << num_packages << " packages." << std::endl;
 
-
 		MPI_Recv(&message_size, 1, MPI_INT, 0, 666, MPI_COMM_WORLD, &status);
 
-
 		std::cout << "[Worker] Length of word received: " << message_size << std::endl;
+
 		char *buf = new char[message_size];		
 
 		MPI_Recv(buf, message_size, MPI_CHAR, 0, 777, MPI_COMM_WORLD, &status);
@@ -83,13 +82,12 @@ int main(int argc, char **argv) {
 					int end_word = character - 1;
 
 					char *new_word = new char[size_new_word];
+
 					for (int word_character = begin_word; word_character <= end_word; word_character++) {
 						
 						new_word[index_new_word] = buf[word_character];
 						index_new_word++;
 					}
-					
-						
 						
 					words_to_sort.push_back(std::string(new_word));
 					delete[] new_word;
@@ -106,10 +104,10 @@ int main(int argc, char **argv) {
 
 		
 		std::cout << "[Worker] Slave " << rank << " running on " << name << ": Length and Data received. Starting local merge..." << std::endl;
-		std::cout << words_to_sort[28] << std::endl;
+		
 		//ptr to vec (move constructor)
 		auto words_to_sort_ptr = std::make_shared<std::vector<std::string>>(std::move(words_to_sort));
-		std::cout << words_to_sort_ptr->at(28) << std::endl;
+
 		//merge sort the vector received from master
 		mSort->mergeSort(words_to_sort_ptr, 0, words_to_sort_ptr->size() - 1);
 
@@ -120,11 +118,9 @@ int main(int argc, char **argv) {
 
 		//MPI_Send(&num_packages, 1, MPI_INT, 0, 555, MPI_COMM_WORLD);
 
-		std::cout << "[Worker] Slave " << rank << " running on " << name << ": sent back length to Master." << std::endl;		
-
-		//std::cout << "[Master] sent length: " << word_size << " to slave " << slave_id << std::endl;
-
+		
 		std::stringstream buffer;
+		//first element must be a ";"
 		buffer << ";";
 
 		for (std::string word : *words_to_sort_ptr) {
@@ -144,8 +140,6 @@ int main(int argc, char **argv) {
 		
 		//send chars of word in ONE char array
 		MPI_Send(to_send, message_size, MPI_CHAR, 0, 777, MPI_COMM_WORLD);
-
-		//std::cout << "[Worker] sent word " << to_send << " to master " << slave_id << std::endl;
 
 		delete[] to_send;
 
@@ -234,33 +228,35 @@ int main(int argc, char **argv) {
 
 					//std::cout << "[Master] sent length: " << word_size << " to slave " << slave_id << std::endl;
 
-                    			std::stringstream buffer;
-					
-                    			buffer << ";";
+					std::stringstream buffer;
+		
+					buffer << ";";
 
-                    			for (auto word = begin; word <= end; word++) {
-                      
-                        		//";" is seperator marking begin of a word (";abc;...;wtf;")
-                        		buffer << string_to_sort[word] << ";";
+					for (auto word = begin; word <= end; word++) {
+			
+						//";" is seperator marking begin of a word (";abc;...;wtf;")
+						buffer << string_to_sort[word] << ";";
 
-                    			}
-					
-                    			std::string temp = buffer.str();
-                    			int message_size = temp.size() + 1;
-                    			char * to_send = new char[message_size];
-					
-                    			strcpy(to_send, temp.c_str());
-                    			// send length of whole array
+					}
+		
+					std::string temp = buffer.str();
+					int message_size = temp.size() + 1;
+					char * to_send = new char[message_size];
+		
+					strcpy(to_send, temp.c_str());
+
+                    // send length of whole array
 					message_size = message_size +1;
-                    			MPI_Send(&message_size, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
 
-		    			//send word in ONE char array
-		    			MPI_Send(to_send, message_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
+                    MPI_Send(&message_size, 1, MPI_INT, slave_id, 666, MPI_COMM_WORLD);
+
+					//send word in ONE char array
+					MPI_Send(to_send, message_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD);
 
 		   			//std::cout << "[Master] sent word " << to_send << " to slave " << slave_id << std::endl;
 
 		  			delete[] to_send;
-		    			std::cout << "[Master] sent " << length << "words to slave " << slave_id << std::endl;
+		    		std::cout << "[Master] sent " << length << "words to slave " << slave_id << std::endl;
 
 				}
 
@@ -293,44 +289,38 @@ int main(int argc, char **argv) {
 
 					MPI_Recv(buf, message_size, MPI_CHAR, slave_id, 777, MPI_COMM_WORLD, &status);
 
-                    			int begin_word = 0;     
+                    int begin_word = 0;     
 
 					for (int character = 0; character < message_size; character++) {
 			
-                        		//";" is seperator marking begin of a word (";abc;...;wtf;")
-                        		if (buf[character] == ';') {
-                            
-                            			if(character != 0) {
+						//";" is seperator marking begin of a word (";abc;...;wtf;")
+						if (buf[character] == ';') {
+					
+							if(character != 0) {
 
-                                		int index_new_word = 0;
-                                		int size_new_word = character - begin_word;
-                                		int end_word = character - 1;
+								int index_new_word = 0;
+								int size_new_word = character - begin_word;
+								int end_word = character - 1;
 
-                                		char *new_word = new char[size_new_word];
+								char *new_word = new char[size_new_word];
 
-                                		for (int word_character = begin_word; word_character <= end_word; word_character++) {
-                                    
-                                    			new_word[index_new_word] = buf[word_character];
-                                    			index_new_word++;
-                                		}
+								for (int word_character = begin_word; word_character <= end_word; word_character++) {
+							
+									new_word[index_new_word] = buf[word_character];
+									index_new_word++;
+								}
 
-                                	words_to_sort.push_back(std::string(new_word));
-					delete [] new_word;
-                            	}
-                            //needs to be set in first iteration in order to "skip" the first ";"
-                            begin_word = character + 1;
-                        }
+								words_to_sort.push_back(std::string(new_word));
+								delete [] new_word;
+							}
+							//needs to be set in first iteration in order to "skip" the first ";"
+							begin_word = character + 1;
+						}
 
                     }
 					//std::cout << "[Worker] Received word: " << std::string(buf) << std::endl;
-
-					//vec.emplace(vec.begin() + word, std::move(std::string(buf)));
-					//vec.assign()
-
 					
 					delete[] buf;
-
-
 
 					//TODO: revise, do not copy
 					//vecs_from_slaves.emplace(vecs_from_slaves.begin() + i, std::move(vec));

@@ -40,7 +40,6 @@ TEST (MergeSortTestBench, testMergeSort) {
 
         EXPECT_EQ(words_sorted->at(element), groundTrouth->at(element));
     }
-    
 
 }
 
