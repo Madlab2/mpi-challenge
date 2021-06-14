@@ -1,0 +1,13 @@
+\section{Fazit}
+%\label{section:Fazit}
+Durch den Vergleich zwischen der Laufzeit des Merge-Sort-Algorithmen ohne MPI mit dem parallelisierten Merge-Sort-Algorithmen werden Erkenntnisse gesammelt. Die Frage die sich stellt: Bietet eine Parallelisierung mit MPI deutlich mehr Vorteile bei einem Merge-Sort-Algorithmus?\\
+
+Bei der ersten Implementation dauert der Merge-Sort der eingelesenen Datei von der Laufzeit länger. Erst ab fünf Prozessen ist MPI bei der Implementierung gleich schnell. Das wiederum heißt, dass bei insgesamt fünfzehn verfügbaren Prozessen sich die Laufzeit verbessert. Da in der Ausgangsimplementierung die einzelnen Chars der Wörter einzeln versendet werden, erzielt eine Optimierung mit weniger Sende- und Empfangsvorgänge eine deutlich verbesserte Laufzeit.
+
+Durch diese Optimierung der ersten Implementation sind zwei Prozesse deutlich schneller als die Ausgangssituation ohne MPI. Somit wird deutlich, dass MPI eine Verbesserung der Laufzeit darstellt, wenn ein Algorithmus parallelisierbar ist. Durch Zeitmangel konnten die Optimierungsschritte II und III nicht mehr umgesetzt werden. Jedoch kann davon ausgegangen werden, dass die Laufzeiten durch die beschriebenen Optimierungen zusätzlich noch verbessert werden können.
+
+Anhand der Laufzeit Messung ist ein graphischer Verlauf einer Exponentialverteilung zu erkennen, was darauf schließen lässt, dass bei einer gewissen Anzahl an Prozessen die Laufzeit nur minimal abweicht und bei vielen Prozessen eine Laufzeitverbesserung nicht mehr stattfindet. Somit ist die Anzahl der Wörter bei Auswahl der Menge an Prozessen entscheidend. Denn bei diesem Projekt wurde eine Dateigröße von 2,4 MB mit einzelnen Wörter beim Sortieren verwendet.  
+
+Eine weitere Erkenntnis ist, dass die Laufzeit bei gleichbleibenden Prozessen und Wörtern keinen deterministischen Vorgang aufweist. Denn bei jedem neuen Aufruf des Merge-Sorts mit MPI variierte die Laufzeit. Dieses Ereignis tritt durch die Nutzung der Cloud auf.\\
+
+Anhand der Erkenntnisse und der Laufzeitauswertung ist zu sagen, dass MPI bei dem Merge-Sort-Algorithmus eine gute Performance bietet und die Laufzeit durch die Parallelisierung vermindert. Dies ist nützlich bei vielen Daten mit umfangreichen Rechenanteil, sodass die Prozesse parallel berechnen und die Ergebnisse am Ende zusammenführen können.
