@@ -1,0 +1,94 @@
+Merge-Sort ist ein effizienter Algorithmus zur Sortierung vergleichbarer Datenobjekte.  Der Algorithmus setzt sich dem Namen nach aus \glqq merge\grqq{} (engl.  für Verschmelzen) und \glqq sort\grqq{} (engl.  für Sortieren) zusammen und wurde 1945 durch John von Neumann vorgestellt. Es handelt sich um einen stabilen Sortieralgorithmus,  der die Reihenfolge zusammengehöriger Eingangsdaten bei eventueller Sortierung über einen weiteren Parameter nicht manipuliert. Außerdem arbeitet der Algorithmus nach dem \glqq Teile und Hersche\grqq{}-Prinzip und setzt dafür folglich auf Rekursion, Merge-Sort wird zum Sortieren und Arrays/Listen bzw.  anderen listenähnlichen Datenstrukturen verwendet.\\
+\begin{figure}[htbp]
+\centering
+% 5-2-3-1-4    10
+% 5-2 3-1-4	8.5
+% 5 2 3 1-4	7
+% 5 2 3 1 4	5.5
+% 2-5 3 1-4	4
+% 2-5 1-3-4	2.5
+%1-2-3-4-5	1
+\begin{tikzpicture}[scale=0.75, transform shape]
+\draw [thick, fill=gray!50] (1,9) rectangle(2,10) node[pos=.5] {5};
+\draw [thick, fill=gray!50] (2,9) rectangle(3,10) node[pos=.5] {2};
+\draw [thick, fill=gray!50] (3,9) rectangle(4,10)node[pos=.5] {3};
+\draw [thick, fill=gray!50] (4,9) rectangle(5,10)node[pos=.5] {1};
+\draw [thick, fill=gray!50] (5,9) rectangle(6,10)node[pos=.5] {4};
+
+\draw [thick, fill=gray!50] (0.25,7.5) rectangle(1.25,8.5)node[pos=.5] {5};
+\draw [thick, fill=gray!50] (1.25,7.5) rectangle(2.25,8.5)node[pos=.5] {2};
+\draw [thick, fill=gray!50] (3.375,7.5) rectangle(4.375,8.5)node[pos=.5] {3};
+\draw [thick, fill=gray!50] (4.375,7.5) rectangle(5.375,8.5)node[pos=.5] {1};
+\draw [thick, fill=gray!50] (5.375,7.5) rectangle(6.375,8.5)node[pos=.5] {4};
+
+\draw [thick, fill=gray!50] (0.25,6) rectangle(1.25,7)node[pos=.5] {5};
+\draw [thick, fill=gray!50] (1.25,6) rectangle(2.25,7)node[pos=.5] {2};
+\draw [thick, fill=gray!50] (3,6) rectangle(4,7)node[pos=.5] {3};
+\draw [thick, fill=gray!50] (4.75,6) rectangle(5.75,7)node[pos=.5] {1};
+\draw [thick, fill=gray!50] (5.75,6) rectangle(6.75,7)node[pos=.5] {4};
+
+\draw [thick, fill=gray!50] (0,4.5) rectangle(1,5.5)node[pos=.5] {5};
+\draw [thick, fill=gray!50] (1.5,4.5) rectangle(2.5,5.5)node[pos=.5] {2};
+\draw [thick, fill=gray!50] (3,4.5) rectangle(4,5.5)node[pos=.5] {3};
+\draw [thick, fill=gray!50] (4.5,4.5) rectangle(5.5,5.5)node[pos=.5] {1};
+\draw [thick, fill=gray!50] (6,4.5) rectangle(7,5.5)node[pos=.5] {4};
+
+\draw [thick, fill=gray!50] (0.25,3) rectangle(1.25,4)node[pos=.5] {2};
+\draw [thick, fill=gray!50] (1.25,3) rectangle(2.25,4)node[pos=.5] {5};
+\draw [thick, fill=gray!50] (3,3) rectangle(4,4)node[pos=.5] {3};
+\draw [thick, fill=gray!50] (4.75,3) rectangle(5.75,4)node[pos=.5] {1};
+\draw [thick, fill=gray!50] (5.75,3) rectangle(6.75,4)node[pos=.5] {4};
+
+\draw [thick, fill=gray!50] (0.25,1.5) rectangle(1.25,2.5)node[pos=.5] {2};
+\draw [thick, fill=gray!50] (1.25,1.5) rectangle(2.25,2.5)node[pos=.5] {5};
+\draw [thick, fill=gray!50] (3.375,1.5) rectangle(4.375,2.5)node[pos=.5] {1};
+\draw [thick, fill=gray!50] (4.375,1.5) rectangle(5.375,2.5)node[pos=.5] {3};
+\draw [thick, fill=gray!50] (5.375,1.5) rectangle(6.375,2.5)node[pos=.5] {4};
+
+\draw [thick, fill=gray!50] (1,0) rectangle(2,1)node[pos=.5] {1};
+\draw [thick, fill=gray!50] (2,0) rectangle(3,1)node[pos=.5] {2};
+\draw [thick, fill=gray!50] (3,0) rectangle(4,1)node[pos=.5] {3};
+\draw [thick, fill=gray!50] (4,0) rectangle(5,1)node[pos=.5] {4};
+\draw [thick, fill=gray!50] (5,0) rectangle(6,1)node[pos=.5] {5};
+\draw [thick,draw=black,->] (3.875,1.5) -- (1.5,1);
+\draw [thick,draw=black,->] (0.75,1.5) -- (2.5,1);
+\draw [thick,draw=black,->] (5.875,1.5) -- (3.5,1);
+\draw [thick,draw=black,->] (5.875,1.5) -- (4.5,1);
+\draw [thick,draw=black,->] (1.75,1.5) -- (5.5,1);
+\draw [thick,draw=black,->] (0.75,3) -- (0.75,2.5);
+\draw [thick,draw=black,->] (1.75,3) -- (1.75,2.5);
+\draw [thick,draw=black,->] (3.5,3) -- (4.875,2.5);
+\draw [thick,draw=black,->] (5.25,3) -- (3.875,2.5);
+\draw [thick,draw=black,->] (6.25,3) -- (5.875,2.5);
+\draw [thick,draw=black,->] (2,4.5) -- (0.75,4);
+\draw [thick,draw=black,->] (0.5,4.5) -- (1.75,4);
+\draw [thick,draw=black,->] (3.5,4.5) -- (3.5,4);
+\draw [thick,draw=black,->] (5,4.5) -- (5.25,4);
+\draw [thick,draw=black,->] (6.5,4.5) -- (6.25,4);
+\draw [thick,draw=black,->] (0.75,6) -- (0.5,5.5);
+\draw [thick,draw=black,->] (1.75,6) -- (2,5.5);
+\draw [thick,draw=black,->] (3.5,6) -- (3.5,5.5);
+\draw [thick,draw=black,->] (5.25,6) -- (5,5.5);
+\draw [thick,draw=black,->] (6.25,6) -- (6.5,5.5);
+\draw [thick,draw=black,->] (0.75,7.5) -- (0.75,7);
+\draw [thick,draw=black,->] (1.75,7.5) -- (1.75,7);
+\draw [thick,draw=black,->] (3.875,7.5) -- (3.5,7);
+\draw [thick,draw=black,->] (4.875,7.5) -- (5.25,7);
+\draw [thick,draw=black,->] (5.875,7.5) -- (6.25,7);
+\draw [thick,draw=black,->] (1.5,9) -- (0.75,8.5);
+\draw [thick,draw=black,->] (2.5,9) -- (1.75,8.5);
+\draw [thick,draw=black,->] (3.5,9) -- (3.875,8.5);
+\draw [thick,draw=black,->] (4.5,9) -- (4.875,8.5);
+\draw [thick,draw=black,->] (5.5,9) -- (5.875,8.5);
+\end{tikzpicture}
+\caption[Darstellung Merge-Sort Beispiel]{Ablauf eines Merge-Sort über ein Array aus Beispielzahlen}
+\label{fig:mergesort}
+\end{figure}
+Um die Elemente der Datenstruktur (im Folgenden Liste) sortieren zu können,  werden diese zunächst rekursiv geteilt.  Dafür wird die Liste in eine linke und rechte Hälfte geteilt.  Die Hälften stellen jetzt jeweils die Basis für den nächsten Rekursions- bzw- Teilungsschritt dar. Der Vorgang wird wiederholt,  bis pro Teilliste lediglich ein weiters Element vorhanden ist.  Die Teilung der Datenelemente fordert nahezu keine Rechenleistung und benötigt keinen zusätzlichen Speicherplatz.  Im Anschluss wird die Rekursion der Teilung für den eigentlichen Sortiervorgang zurück durchlaufen. Die geteilten Listen werden nun innerhalb der Rekursion zu Zweierpaaren jeweils sortiert in eine neue Liste zusammengeführt. In der Informatik wird dabei auch von Konkatenierung gesprochen.  Aufgrund der Zusammenführung der Listen aus zwei bereits sortierten Teillisten können im Sortiervorgang jeweils die ersten Elemente verglichen werden. Das Element mit dem niedrigeren Wert wird in die Liste der Zusammenführung gespeichert.  Da in diesem Schritt zeitgleich drei Listen vorhanden sind wird hier abseits des ursprünglichen Datenspeichers zusätzlicher Speicher benötigt.  Aufgrund der Vergleiche ergibt sich in der Zusammenführung der überwiegende Rechenaufwand des Algorithmus.  Der Ablauf des \glqq merge\grqq{} bzw. Zusammenführens wird bis zur Startgröße der Liste fortgeführt.\\
+Bei Merge-Sort handelt es sich um ein stabiles Sortierverfahren.  Außerdem lässt sich die Laufzeit in der bekannten Landau-Notation darstellen. Im Vergleich zu anderen Sortieralgorithmen beträgt die Laufzeit bei Merge-Sort im schlechtestem,  durschschnittlichem und besstem Fall immer:
+\begin{math}
+\mathcal{O}(n\log n)
+\end{math}.
+Trotz der immer gleichen Laufzeit nach der Landau-Notation wird in viele Fällen kein Merge-Sort für die Sortierung großer Datenmengen verwendet.  Neben der Betrachtung der Speicherzugriffe muss zudem der zusätzlich benötigte Speicher in die Betrachtung der Laufzeit bzw. Komplexität einbezogen werden.  Wie bereits erwähnt wird beim Zusammenführen der zwei Listen eine dritte Liste benötigt.  Diese nimmt im letzten Konkatinierungsschritt eine Länge aller Elemente aus.  Dementsprechend werden für die Merge-Sort neben der Rechenleistung auch ein Speicherbereich in der Größe der Ausgangsdaten benötigt.  Trotz der deutlich besseren Komplexität im schlechtesten Sortierfall, werden aufgrund des Speicherbedarfs meist andere Sortierverfahren ohne zusätzlichen Speicherbedarf verwendet.
+
+ggf.:Master-Theorem: 2*T(n/2) + T(n) mit T(x) = n*logn
