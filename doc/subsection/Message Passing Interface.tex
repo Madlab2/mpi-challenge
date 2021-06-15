@@ -11,7 +11,6 @@ Konzept: Die Idee von MPI beinhaltet zwei wesentliche Punkte, zu einem die Grupp
 	
 	\item Kommunikationskontexte: Das Kommunikationskontext dient als Lösung bei Überschneidungen der Tag-,Sender- und Empfänger-IDs. Somit gehört jeder Sende- und Empfangsvorgang zu einem Kontext und die Kommunikation erfolgt nur in diesem Kontext, sodass es bei selber IDs z.B. der Tag-ID zu keiner Verwechslung kommen kann. 
 \end{enumerate}
-
 Durch einen Kommunikator werden Prozessgruppen und Kommunikationskontexte mit einander vereint. Beim Programmstart wird ein allgemeiner Kommunikator MPI\_COMM\_WORLD erzeugt. Dieser wird auch in diesem Projekt verwendet.\\
 Umsetzung: Um MPI zu verwenden muss zunächst MPI initialisiert werden, wobei der  Kommunikator MPI\_COMM\_WORLD erzeugt wird. \\
 Mit dem Befehl MPI\_Comm\_size() kann die Größe der Gruppe bestimmt werden. Mit dem Befehl MPI\_Comm\_rank() kann der Rang der einzelnen Prozesse ermittelt werden. Der Rang beschreibt die Positionen der einzelnen Prozesse innerhalb einer Gruppe.
