@@ -3,38 +3,53 @@ Um diese These zu überprüfen, und weitere mögliche Zusammenhänge zu erfassen
 Um Vergleichbarkeit herzustellen, wurden alle Messungen innerhalb kürzester Zeit am gleichen Tag vorgenommen. Aufgrund beschränkter Zeit wurde eine Stichprobengröße von $n = 10$ Messungen pro Messklasse gewählt.
 Es sei angemerkt: wünschenswert und für eine statistisch fundierter Aussage notwendig wäre das fünf bis zehnfache hiervon. \\
 Die Messklassen werden hier über die Anzahl der verwendeten Rechenknoten festgelegt; für die Auswertung wurden Messungen mit einem bis sieben Rechenknoten durchgeführt.
-Gemessen wird jeweils die benötigte Laufzeit, eine wohldefinierte und unveränderliche Datei bestehend aus einer großen Zahl von Wörtern zu sortieren.
+Gemessen wird jeweils die benötigte Laufzeit, eine wohldefinierte und unveränderliche Datei bestehend aus einer Zahl der Größenordnung von $400.000$ Wörtern zu sortieren.
 Eine Messergebnis ist die mithilfe der Standard Template Bibliothek std::chrono gemessene Zeit, welche im Programmablauf des Master-Knotens zwischen dem Zeitpunkt unmittelbar vor der Verteilung der Teilelemente 
 des zu sortierenden Textes an die Slave-Knoten und dem Zeitpunkt unmittelbar nach dem Zusammenführen der Ergebnisse der Slave-Rechenknoten verstreicht.
-Das arithmetische Mittel sowie die Standardabweichung der Messreihen sind in Tabelle 1 aufgeführt.
-\begin{table}
-    \centering
-    \caption{Zeitmessungen mit verschiedenen Anzahlen an Rechenknoten}
-    \label{zeiten_tabelle}
-    \begin{tabular}{l|lllllll}
-    \textbf{Anzahl der Rechenknoten}  & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} & \textbf{6} & \textbf{7}  \\ 
-    \hline\hline
-    \%\textbackslash{}bar\{t\}\$ [ms] & 4382.9     & 2413.7     & 2148.5     & 1728.6     & 1715.9     & 1621.6     & 1574.6      \\
-    \$\textbackslash{}sigma\$ [ms]    & 491.2      & 128.0      & 113.9      & 72.2       & 70.9       & 62.3       & 112.4      
-    \end{tabular}
-\end{table}
+Das arithmetische Mittel sowie die Standardabweichung der Messreihen sind in der oberen Hälfte von Tabelle 1 aufgeführt.
+
 Bei der Messreihe mit genau einem Rechenknoten ist eine erhöhte Unsicherheit zu erkennen. Dennoch ist der Mittelwert signifikant höher als bei allen anderen 
 Messungen mit einer Rechenknotenanzahl größer eins. Bei den Anzahlen vier, fünf und sechs ist eine im Vergleich geringe Abweichung festzustellen. Diese Werte haben eine entsprechend hohe 
 Aussagekraft. Interessanterweise sind die Mittelwerte der Zeiten ab einer Rechenknotenanzahl von 4 sehr nah beieinander. Daher kann mit den vorliegenden Daten keine statistisch begründete Aussage getroffen werden, ob sich die Rechenzeit ab einer Knotenzahl von 4 noch messbar verändert. Hierfür liegen die Messungen zu nah beieinander. Der scheinbar deutlich niedrigere Mittelwert der 7. Messung wird durch eine
 höhere Messunsicherheit relativiert.
 \\
-Eine umfassendere Darstellung der Daten erfolgt mithilfe eines Whiskers Plots, auch Kastenschaubild genannt (Abbildung X). Auch hier ist die vermutete, anfängliche und deutliche 
+Eine umfassendere Darstellung der Daten erfolgt mithilfe eines Whiskers Plots, auch Kastenschaubild genannt (Abbildung 2). Auch hier ist die vermutete, anfängliche und deutliche 
 Absenkung der Laufzeiten über die Anzahl der Rechenknoten zu erkennen. Ebenfalls fällt ein starker Ausreißer bei der Knotenzahl eins auf. Auch bei Knotenzahlen zwei, vier und sechs 
 gibt es solche Ausreißer. Interessanterweise gibt es gerade bei den Knotenzahlen vier und sechs, welche eine relativ geringe Standardabweichung aufweisen, ebenfalls Ausreißer nach oben. 
 Im Kontext der niedrigen Standardabweichung bedeutet das einerseits, dass die restlichen Messwerte dieser Messreihen besonders konsistent sind. Andererseits könnte dies ein Hinweis darauf sein, dass die gemessenen Zeiten durch Zufall besonders konsistent und niedrig ausgefallen sind.
+
+\begin{table*}
+	\caption{Zeitmessungen mit kleiner und großer Wörterzahl}
+	\label{zeiten_tabelle_lang_und_kurz}
+	\begin{tabularx}{\textwidth}{@{}l*{10}{C}c@{}}
+		\toprule
+		Anzahl der Rechenknoten & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\ 
+		\midrule
+		$\bar{t}_{wenige Wörter}$ $\mathrm{[ms]}$ & 4382.9 & 2413.7 & 2148.5 & 1728.6 & 1715.9 & 1621.6 & 1574.6 \\
+		$\sigma_{wenige Wörter}$ $\mathrm{[ms]}$ & 491.2 & 128.0 & 113.9 & 72.2 & 70.9 & 62.3 & 112.4 \\
+		\addlinespace
+		$\bar{t}_{viele Wörter}$ $\mathrm{[ms]}$ & 13114.2 & 8857.0 & 6643.7 & 5913.3 & 5072.5 & 4727.8 & 4855.2 \\
+		$\sigma_{viele Wörter}$ $\mathrm{[ms]}$ & 99.3 & 240.1 & 202.2 & 261.0 & 125.1 & 105.0 & 180.1 \\
+		\bottomrule
+	\end{tabularx}
+\end{table*}
+
 \begin{figure}[!t]
     \centering
     \includegraphics[width=3.5in]{boxplots.png}
-    \caption{Cpation is already in picture!}
+    \caption{Messwerte zur kleineren der beiden getesteten Dateien dargestellt in einem Kastenschaubild}
     \label{boxplot_times}
 \end{figure}
-\\
+
 So lassen die beobachteten Phänomene insgesamt darauf schließen, dass die Parallelisierung in ihrer für das Projekt durchgeführten Implementierung eine signifikante Absenkung der Laufzeit von bis zu einer Größenordnung von 60\% mit sich bringt. Dieser Effekt ist jedoch stark begrenzt und flacht mit einer steigenden Rechenknotenanzahl schnell ab bzw. verschwindet gänzlich. Die Effizienz pro Rechenknoten nimmt damit bei steigender Anzahl von Rechenknoten schnell ab.
 Für genauere Aussagen ist eine größere Anzahl an Messungen pro Messklasse für nötig.
 \\
 Eine Deutung für die Beobachteten Ergebnisse: die Rechenknoten in der Cloud sind mittels Ethernet miteinander verbunden, was das Senden und Empfangen von Nachrichten erstens nicht zeitlich deterministisch und zweitens anfällig für unregelmäßige und längere Laufzeiten macht. Offenbar bewegt sich bei der betrachteten Dateigröße das Senden und Empfangen von Nachrichten an mehr Knoten ab einer Knotenzahl von ca. vier in einer ähnlichen Größenordnungen wie der Laufzeitgewinn, welcher dadurch entsteht, dass ein Rechenknoten nur eine geringere Anzahl an Arbeit (Wörter sortieren) hat. Die Autoren vermuten, dass bei einer deutlich größeren Datei (mit mehr Wörtern), ein Laufzeitgewinn auch bei größeren Knotenzahlen zu messen sein wird.
+\\
+Um diese These zu untersuchen, wurden die Messungen mit einer Datei der doppelten Länge wiederholt. Die Ergebnisse sind in der unteren Hälfte von Tabelle 1 und Abbildung 3 zu begutachten. Wieder ist ein zunächst signifikanter Abfall der Rechenzeiten zu beobachten bevor auch hier der oben beschriebene Effekt der Abflachung auftritt. War es oben der Schritt von Knotenzahl 3 auf 4, welcher eine letzte messbare Reduzierung der Laufzeit mit sich brachte, ist es nun der Schritt von Knotenzahl 4 auf 5. Dies widerlegt die Antithese, dass mehr Rechenaufwand sich \textit{nicht} auf den Auftretenszeitpunkt dieses Effektes auswirkt. Jedoch ist insbesondere unter Betrachtung der absoluten Laufzeitwerte festzustellen, dass eine größerer Arbeitsaufwand nicht ohne weiteres durch mehr Rechenknoten kompensierbar scheint. Während bei der kleineren Datei die Laufzeiten sich im Bereich von $1.6\mathrm{s}$ eingependelt haben, werden mit bei doppelter Wörteranzahl etwa $5\mathrm{s}$ benötigt. Der zugrunde liegende Merge Sort Algorithmus ist Teil der Komplexitätsklasse ${\mathcal{O}(n\log{n})}$. Es ist damit zu erwarten, dass die Laufzeiten bei gleicher Knotenzahl sich mehr als verdoppeln, also überlinear steigen. Dies ist auch in Tabelle 2 zu erkennen. Die Autoren hätten insbesondere Aufgrund der gewählten Aufteilungsstrategie erwartet, dass mit mehr Knoten eine größere Wörteranzahl zu großen Teilen kompensiert wird. Ein Vergleich der Mittelwerte in Tabelle 1 wiederlegt diese These deutlich. Die Anzahl der Wörter, welche jeder Knoten im Fall \glqq kleine Datei, 3 Rechenknoten\grqq{} und im Fall \glqq große Datei, 6 Rechenknoten\grqq{} zu sortieren hat, ist identisch. Die benötigten mittleren Zeiten, $~2\mathrm{s}$ vs. $~6\mathrm{s}$ widerlegen diese Annahme deutlich. Die Autoren identifizieren insbesondere die Funktion \textit{merge\_back()} als primäre Ursache hierfür. Grund hierfür ist, dass diese allein auf dem Master Knoten läuft. Entsprechend wäre dies der erste Angriffspunkt, welchen die Autoren für weitere Optimierung angingen, falls diese gewünscht wäre.\\
+\begin{figure}[!t]
+	\centering
+	\includegraphics[width=3.5in]{boxplots_long.png}
+	\caption{Messwerte zur größeren der beiden getesteten Dateien dargestellt in einem Kastenschaubild}
+	\label{boxplot_times_long}
+\end{figure}
