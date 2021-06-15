@@ -1,7 +1,7 @@
 #!/bin/bash
 git pull
 sudo chmod +x install.sh
-for h in {0..6}
+for h in {0..15}
 do
 echo "ubuntu@worker$h"
 ssh ubuntu@worker$h 'bash -s' < install.sh &> /dev/null
