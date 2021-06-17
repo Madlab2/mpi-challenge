@@ -14,7 +14,7 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 % for cute tables
-\usepackage{tabularx,booktabs}
+\usepackage{tabularx, booktabs}
 \newcolumntype{C}{>{\centering\arraybackslash}X} % centered version of "X" type
 \setlength{\extrarowheight}{1pt}
 % end for cute tables
@@ -28,25 +28,25 @@ should not be used}
 }
 
 \author{
-\IEEEauthorblockN{1\textsuperscript{st} Karina Heins}
+\IEEEauthorblockN{\textsuperscript{st} Karina Heins}
 \IEEEauthorblockA{\textit{DHBW Ravensburg Campus Friedrichshafen} \\
 \textit{Mercedes-Benz AG}\\
 Friedrichshafen,  Germany \\
 heins.karina-tfe18@it.dhbw-ravensburg.de}
 \and
-\IEEEauthorblockN{2\textsuperscript{st} Florian Schatz}
+\IEEEauthorblockN{\textsuperscript{st} Florian Schatz}
 \IEEEauthorblockA{\textit{DHBW Ravensburg Campus Friedrichshafen} \\
 \textit{Mercedes-Benz AG}\\
 Friedrichshafen,  Germany \\
 schatz.florian-tfe18@it.dhbw-ravensburg.de}
 \and
-\IEEEauthorblockN{3\textsuperscript{st} Patrick Madlindl}
+\IEEEauthorblockN{\textsuperscript{st} Patrick Madlindl}
 \IEEEauthorblockA{\textit{DHBW Ravensburg Campus Friedrichshafen} \\
 \textit{Mercedes-Benz AG}\\
 Friedrichshafen,  Germany \\
 madlindl.patri-tfe18@it.dhbw-ravensburg.de}
 \and
-\IEEEauthorblockN{4\textsuperscript{st} Marcel Dirschinger}
+\IEEEauthorblockN{\textsuperscript{st} Marcel Dirschinger}
 \IEEEauthorblockA{\textit{DHBW Ravensburg Campus Friedrichshafen} \\
 \textit{Airbus Helicopters AG}\\
 Friedrichshafen,  Germany \\
@@ -69,16 +69,17 @@ component, formatting, style, styling, insert
 \input{subsection/Einleitung.tex}
 \section{Grundlagen}
 Im folgenden Abschnitt wird die Theorie des Merge Sorts erklärt und danach wird auf das Konzept des Message Passing Interface und des Cloud Computing eingegangen. Diese Grundlagen bilden die Voraussetzungen für die Umsetzung des Projekts.
-\subsection{Merge Sort}
 \input{subsection/MergeSort.tex}
- \input{subsection/Message Passing Interface.tex}
- \subsection{Cloud Computing}
+\input{subsection/Message Passing Interface.tex}
+%\input{subsection/Cloud Computing.tex}
+
 \section{Umsetzung}
-\input{subsection/Test.tex}
-\subsection{Parallelisierung}
-\section{Ergebnis}
+%\input{subsection/Parallelisierung}
 \input{subsection/Optimierung.tex}
-\input{subsection/Auswertung.tex}
+\input{subsection/Test.tex}
+
+\input{section/Ergebnis.tex}
+\input{section/Auswertung.tex}
 \input{subsection/Fazit}
 
 \section*{Acknowledgment}
