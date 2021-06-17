@@ -4,17 +4,16 @@ Um eine Parallelisierung einer Implementation zu ermöglichen werden zunächst u
 Message Passing Interface (MPI) ermöglicht einen Austausch von Nachrichten zwischen diesen verteilten Rechnern. Somit dient MPI als Programmierschnittstelle und verschickt verpackte Nachrichten an andere parallelisierten Prozesse.\\
 Diese Spezifikation des MPIs wurde in OpenMPI und MPICH implementiert, sodass ein Nachrichtenaustausch zwischen mehreren Rechnern möglich ist. 
 Diese Implementierungen stehen parallelen Maschinen wie dem Linux-Rechner zur Verfügung, welcher in diesem Projekt verwendet wird.\\ 
-Konzept: Die Idee von MPI beinhaltet zwei wesentliche Punkte, zu einem die Gruppe von Prozessen und zum anderen die Kommunikationskontexte. Diese beiden Inhalte werden im Folgenden näher erläutert.
-\begin{enumerate}
-	\item Prozessgruppe: Mit Prozessgruppen ist die Anzahl an beteiligten Rechnern definiert. Beim Durchführen des Programms mit MPI, werden zu Beginn die beteiligten Prozesse gestartet. Innerhalb des Programms können die einzelnen Prozesse gesteuert und zusätzlich in einzelne Untergruppen zusammengefasst werden. \\
-	Die einzelnen Nachrichten können anhand der Empfänger- bzw. Sender-ID zugeordnet werden. Somit wissen sendende Prozesse, an wen sie die Nachrichten senden und zu welchem Zeitpunkt. Genau das selbe gilt für die Empfänger. Sie wissen anhand der ID, welche Nachricht sie zu welchen Zeitpunkt erhalten.\\
-	
-	\item Kommunikationskontexte: Das Kommunikationskontext dient als Lösung bei Überschneidungen der Tag-,Sender- und Empfänger-IDs. Somit gehört jeder Sende- und Empfangsvorgang zu einem Kontext und die Kommunikation erfolgt nur in diesem Kontext, sodass es bei selber IDs z.B. der Tag-ID zu keiner Verwechslung kommen kann. 
-\end{enumerate}
+\subsubsection{Konzept}
+Die Idee von MPI beinhaltet zwei wesentliche Punkte, zu einem die Gruppe von Prozessen und zum anderen die Kommunikationskontexte. Diese beiden Inhalte werden im Folgenden näher erläutert.
+
+Mit Prozessgruppen ist die Anzahl an beteiligten Rechnern definiert. Beim Durchführen des Programms mit MPI, werden zu Beginn die beteiligten Prozesse gestartet. Innerhalb des Programms können die einzelnen Prozesse gesteuert und zusätzlich in einzelne Untergruppen zusammengefasst werden. \\
+Die einzelnen Nachrichten können anhand der Empfänger- bzw. Sender-ID zugeordnet werden. Somit verschickt das MPI die Nachrichten zu einem bestimmten Zeitpunkt an den zugeordneten Prozess.\\
+Das Kommunikationskontext dient als Lösung bei Überschneidungen der Tag-,Sender- und Empfänger-IDs. Somit gehört jeder Sende- und Empfangsvorgang zu einem Kontext und die Kommunikation erfolgt nur in diesem Kontext, sodass es bei selber IDs z.B. der Tag-ID zu keiner Verwechslung kommen kann. 
 Durch einen Kommunikator werden Prozessgruppen und Kommunikationskontexte mit einander vereint. Beim Programmstart wird ein allgemeiner Kommunikator \textit{MPI\_COMM\_WORLD} erzeugt. Dieser wird auch in diesem Projekt verwendet.\\
-Umsetzung: Um MPI zu verwenden muss zunächst MPI initialisiert werden, wobei der  Kommunikator \textit{MPI\_COMM\_WORLD} erzeugt wird. \\
+\subsubsection{Umsetzung} Um MPI zu verwenden muss zunächst MPI initialisiert werden, wobei der  Kommunikator \textit{MPI\_COMM\_WORLD} erzeugt wird. \\
 Mit dem Befehl \textit{MPI\_Comm\_size()} kann die Größe der Gruppe bestimmt werden. Mit dem Befehl \textit{MPI\_Comm\_rank()} kann der Rang der einzelnen Prozesse ermittelt werden. Der Rang beschreibt die Positionen der einzelnen Prozesse innerhalb einer Gruppe.
-Die MPI-Laufzeitumgebung kann mit dem \textit{MPI\_Finaliez()} am Programmende gestoppt werden.\\
+Die MPI-Laufzeitumgebung kann mit dem \textit{MPI\_Finalize()} am Programmende gestoppt werden.\\
 Die einfache Punkt-zu-Punkt-Kommunikation setzt sich aus den Funktionen \textit{MPI\_Send()} und \textit{MPI\_Recv()} zusammen. Dabei werden einzelne Nachrichten von einem Prozess zum nächsten verschickt. Dabei blockiert \textit{MPI\_Send()} und \textit{MPI\_Recv()} das System bis eine Nachricht verschickt bzw. empfangen wird. Sobald die Nachricht verschickt bzw. empfangen wurde, wird das Programm weiter ausgeführt. \\
 Die Umsetzung wird anhand von Linux-Rechnern und dem OpenMPI umgesetzt. Das implementierte Programm kann mit dem Befehl \textit{mpirun} und den zu nutzenden Prozessen in der Konsole gestartet werden. Alle Prozesse werden gleichzeitig gestartet und nicht nur auf dem Rechner wo der Befehl eingegeben wurde.\\
 Im Projekt wird die Punkt-zu-Punkt-Kommunikation genutzt, sodass der Master einzelne Nachrichtenpakete an die einzelnen Slaves verschickt. Diese Slaves wiederum schicken die Nachrichtenpakete an den Master zurück.\cite{b1} \\
