@@ -14,7 +14,7 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 % for cute tables
-\usepackage{tabularx, booktabs}
+\usepackage{tabularx,booktabs}
 \newcolumntype{C}{>{\centering\arraybackslash}X} % centered version of "X" type
 \setlength{\extrarowheight}{1pt}
 % end for cute tables
@@ -28,29 +28,29 @@ should not be used}
 }
 
 \author{
-\IEEEauthorblockN{\textsuperscript{st} Karina Heins}
+\IEEEauthorblockN{1\textsuperscript{st} Karina Heins}
 \IEEEauthorblockA{\textit{DHBW Ravensburg Campus Friedrichshafen} \\
 \textit{Mercedes-Benz AG}\\
 Friedrichshafen,  Germany \\
 heins.karina-tfe18@it.dhbw-ravensburg.de}
 \and
-\IEEEauthorblockN{\textsuperscript{st} Florian Schatz}
+\IEEEauthorblockN{2\textsuperscript{st} Florian Schatz}
 \IEEEauthorblockA{\textit{DHBW Ravensburg Campus Friedrichshafen} \\
 \textit{Mercedes-Benz AG}\\
 Friedrichshafen,  Germany \\
 schatz.florian-tfe18@it.dhbw-ravensburg.de}
 \and
-\IEEEauthorblockN{\textsuperscript{st} Patrick Madlindl}
+\IEEEauthorblockN{3\textsuperscript{st} Patrick Madlindl}
 \IEEEauthorblockA{\textit{DHBW Ravensburg Campus Friedrichshafen} \\
 \textit{Mercedes-Benz AG}\\
 Friedrichshafen,  Germany \\
 madlindl.patri-tfe18@it.dhbw-ravensburg.de}
 \and
-\IEEEauthorblockN{\textsuperscript{st} Marcel Dirschinger}
+\IEEEauthorblockN{4\textsuperscript{st} Marcel Dirschinger}
 \IEEEauthorblockA{\textit{DHBW Ravensburg Campus Friedrichshafen} \\
 \textit{Airbus Helicopters AG}\\
 Friedrichshafen,  Germany \\
-dirschinger.ma-tfe18@it.dhbw-ravensburg.de}
+dirschinger.marcel-tfe18@it.dhbw-ravensburg.de}
 }
 
 \maketitle
@@ -69,17 +69,16 @@ component, formatting, style, styling, insert
 \input{subsection/Einleitung.tex}
 \section{Grundlagen}
 Im folgenden Abschnitt wird die Theorie des Merge Sorts erklärt und danach wird auf das Konzept des Message Passing Interface und des Cloud Computing eingegangen. Diese Grundlagen bilden die Voraussetzungen für die Umsetzung des Projekts.
+\subsection{Merge Sort}
 \input{subsection/MergeSort.tex}
-\input{subsection/Message Passing Interface.tex}
-\input{subsection/Cloud Computing.tex}
-
+ \input{subsection/Message Passing Interface.tex}
+ \subsection{Cloud Computing}
 \section{Umsetzung}
-\input{subsection/Parallelisierung.tex}
-\input{subsection/Optimierung.tex}
 \input{subsection/Test.tex}
-
-\input{section/Ergebnis.tex}
-\input{section/Auswertung.tex}
+\subsection{Parallelisierung}
+\section{Ergebnis}
+\input{subsection/Optimierung.tex}
+\input{subsection/Auswertung.tex}
 \input{subsection/Fazit}
 
 \section*{Acknowledgment}
@@ -89,20 +88,9 @@ an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B.
 G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor 
 acknowledgments in the unnumbered footnote on the first page.
 
-\addchap{Autorenverzeichnis}
-\renewcommand\thesection{\arabic{section}}
-Karina Heins\\
-Message Passing Interface; Optimierungschitte; Fazit;  \\
-Florian Schatz\\
- Zusammenfassung; MergeSort;  \\
-Patrick Madlindl\\
- Test; Ergebnisse; Auswertung; \\
- Marcel Dirschinger\\
- Cloud Computing; Parallelisierung; Optimierter Algorithmus;\\
 
 \begin{thebibliography}{00}
 \bibitem{b1} Dietmar Fey \glqq Grid-Computing: Eine Basistechnologie für Computational Science\grqq{}, Springer Verlag Heidelberg, Berlin, Seite 99-117 ,2010
-\bibitem{b2} Peter Mell, Timothy Grance \glqq The NIST Definition of Cloud Computing \grqq{}, National Institute of Standards and Technology (NIST), Gaithersburg, Maryland, Seite 6-7, 2011
 \end{thebibliography}
 
 \end{document}
