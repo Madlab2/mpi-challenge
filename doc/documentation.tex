@@ -56,15 +56,8 @@ dirschinger.ma-tfe18@it.dhbw-ravensburg.de}
 \maketitle
 
 \begin{abstract}
-This document is a model and instructions for \LaTeX.
-This and the IEEEtran.cls file define the components of your paper [title, text, heads, etc.]. *CRITICAL: Do Not Use Symbols, Special Characters, Footnotes, 
-or Math in Paper Title or Abstract.
+Dieser Artikel stellt einen Überblick über die Parallerisierung von Merge-Sort über die BW-Cloud bereit.  Merge-Sort bietet in seinen Grundzügen eine effiziente Sortierung, erzeugt wie alle weiteren Sortieralgorithmen bei entsprechend großen Datenmenge trotzdem lange Sortierlaufzeiten. Augrund dessen wird eine mögliche Verbesserung der Sortierlaufzeit durch Aufteilen der Rechenlast mittels des Message Passing Interface untersucht.
 \end{abstract}
-
-\begin{IEEEkeywords}
-component, formatting, style, styling, insert
-\end{IEEEkeywords}
-
 \section{Einleitung}
 \input{subsection/Einleitung.tex}
 \section{Grundlagen}
@@ -78,7 +71,7 @@ Im folgenden Abschnitt wird die Theorie des Merge Sorts erklärt und danach wird
 \input{subsection/Optimierung.tex}
 \input{subsection/Test.tex}
 
-\input{section/Ergebnis.tex}
+%\input{section/Ergebnis.tex}
 \input{section/Auswertung.tex}
 \input{subsection/Fazit}
 
@@ -88,7 +81,7 @@ Karina Heins:\\
 Message Passing Interface; Optimierungschitte; Fazit
 
 Florian Schatz:\\
- Zusammenfassung; MergeSort
+ Zusammenfassung; Einleitung; MergeSort
  
 Patrick Madlindl:\\
  Test; Ergebnisse; Auswertung
@@ -99,6 +92,8 @@ Patrick Madlindl:\\
 \begin{thebibliography}{00}
 \bibitem{b1} Dietmar Fey \glqq Grid-Computing: Eine Basistechnologie für Computational Science\grqq{}, Springer Verlag Heidelberg, Berlin, Seite 99-117 ,2010
 \bibitem{b2} Peter Mell, Timothy Grance \glqq The NIST Definition of Cloud Computing \grqq{}, National Institute of Standards and Technology (NIST), Gaithersburg, Maryland, Seite 6-7, 2011
+\bibitem{b3} Akash Kumar, Akshay Dutt, Gautam Saini \glqq Merge Sort Algorithm \grqq{}, Dronacharya college Of Engineering Khentawas (DCE),  Gurgaon, Indien, Seite 17-19, 2014
+
 \end{thebibliography}
 
 \end{document}
