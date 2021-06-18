@@ -1,13 +1,9 @@
 \section{Fazit}
 %\label{section:Fazit}
-Durch den Vergleich zwischen der Laufzeit des Merge-Sort-Algorithmen ohne MPI mit dem parallelisierten Merge-Sort-Algorithmen werden Erkenntnisse gesammelt. Die Frage, die sich stellt: Bietet eine Parallelisierung mit MPI deutlich mehr Vorteile bei einem Merge-Sort-Algorithmus?\\
-
-Bei der ersten Implementation benötigt der Merge-Sort der eingelesenen Datei von der Laufzeit länger. Erst ab fünf Prozessen ist MPI bei der Implementierung gleich schnell.
-Bei der Gesamtlaufzeit ist die Laufzeit der Programmierung der Sende- und Empfangsvorgängen relevant. Die Zeit für die Sortierung nimmt einen geringen Anteil der Gesamtlaufzeit ein.
-Da die Ausgangsimplementierung die Chars der Wörter einzeln versendet, erzielt eine Optimierung mit weniger Sende- und Empfangsvorgänge eine deutlich verbesserte Laufzeit. Durch diese Optimierung der ersten Implementation sind zwei Prozesse deutlich schneller als die Ausgangssituation ohne MPI. \\
-Anhand der Laufzeit Messung ist ein graphischer Verlauf einer Exponentialverteilung zu erkennen, was darauf schließen lässt, dass bei einer gewissen Anzahl an Prozessen die Laufzeit nur minimal abweicht und bei vielen Prozessen eine Laufzeitverbesserung nicht mehr stattfindet.\\
-Eine weitere Erkenntnis ist, dass die Laufzeit bei gleichbleibenden Prozessen und Wörtern keinen deterministischen Vorgang aufweist. Denn bei jedem neuen Aufruf des Merge-Sorts mit MPI variierte die Laufzeit. Dieses Ereignis tritt durch die Nutzung einer Cloud auf.\\
-
-Zeitlich konnte der Optimierungsschritt III nicht mehr umgesetzt werden. Jedoch kann davon ausgegangen werden, dass die Laufzeit durch die beschriebene Optimierung \ref{Optimierung3} zusätzlich noch verbessert werden kann.
-
-Anhand der Erkenntnisse und der Laufzeitauswertung ist zu sagen, dass MPI bei dem Merge-Sort-Algorithmus eine gute Performance bietet und die Laufzeit durch die Parallelisierung verkürzt. Das ist bei vielen Datenmengen mit umfangreichen Rechenanteil nützlich, damit die Prozesse parallel berechnet und die Ergebnisse am Ende zusammengeführt werden können.
+Durch die Gegenüberstellung der Laufzeiten des Merge-Sort-Algorithmus ohne und mit Parallelisierung konnten für die Autoren wertvolle edukative Erkenntnisse erworben werden. Folgende in der Vorlesung vermittelte Vor- und Nachteile von Parallelisierung konnten nachvollzogen werden:
+\\
+Bei der nicht-optimierten, parallelen Implementierung benötigt das Sortieren länger als ohne Parallelisierung. So ist erst ab fünf Rechenknoten die parallelisierte Variante mit MPI gleich schnell wie die nicht-parallelisierte Variante. Erst durch die diskutierte Optimierung ist eine Laufzeitverbesserung festzustellen, sodass zwei Rechenknoten deutlich schneller als der nicht-parallelisierte Merge Sort sind. In diesem Fall kann anhand der Laufzeitmessung eine Laufzeitverbesserung schon bei niedrigen Rechenknotenzahlen festgestellt werden. Mit steigender Rechenknotenzahl verändert sich die Laufzeit nicht mehr messbar und es findet keine Laufzeitverbesserung mehr statt.\\
+Eine weitere Erkenntnis ist, dass die Laufzeit bei gleichbleibenden Rechenknotenzahlen und Wörterzahlen nicht deterministisch ist. Beim mehrfachen Aufrufen des Merge-Sorts mit MPI variiert die Laufzeit bei gleicher Dateigröße zum Teil signifikant. Dieses Phänomen kann durch die Laufzeitumgebung in einer Cloud erklärt werden.\\
+Zeitlich konnte der Optimierungsschritt III nicht umgesetzt werden. Die Autoren gehen davon aus, dass die Laufzeit mit Optimierung III weiter verbessert werden kann.
+\\
+Abschließend kann behauptet werden, dass im Rahmen des Projektes Vorteile als auch Problemzonen von Parallelisierung aufgezeigt und demonstriert wurden. So kann Parallelisierung des Merge-Sort-Algorithmus einen signifikanten Laufzeitvorteil bieten, allerdings auf Kosten der Effizienz des Programmes.

@@ -21,10 +21,7 @@
 
 \begin{document}
 
-\title{Conference Paper Title*\\
-{\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
-should not be used}
-\thanks{Identify applicable funding agency here. If none, delete this.}
+\title{Parallelisierung eines Sortieralgorithmus zu edukativen Zwecken\\
 }
 
 \author{
@@ -56,38 +53,38 @@ dirschinger.ma-tfe18@it.dhbw-ravensburg.de}
 \maketitle
 
 \begin{abstract}
-Dieser Artikel stellt einen Überblick über die Parallerisierung von Merge-Sort über die BW-Cloud bereit.  Merge-Sort bietet in seinen Grundzügen eine effiziente Sortierung, erzeugt wie alle weiteren Sortieralgorithmen bei entsprechend großen Datenmenge trotzdem lange Sortierlaufzeiten. Augrund dessen wird eine mögliche Verbesserung der Sortierlaufzeit durch Aufteilen der Rechenlast mittels des Message Passing Interface untersucht.
+In diesem Artikel werden Aspekte und Auswirkungen von cloud-basierter Parallelisierung anhand des Merge-Sort Sortieralgorithmus untersucht. Der Merge-Sort Algorithmus bietet in seiner Standardform eine effiziente Sortierung. Wie andere Sortieralgorithmen auch steigt die Laufzeit von Merge Sort mit anwachsenden Datenmengen an. Es wird eine mögliche Verbesserung der Sortierlaufzeit durch Verteilung der Rechenlast auf mehrere Maschinen mittels des Parallelisierungsstandards Message Passing Interface (MPI) untersucht.
 \end{abstract}
+
+\begin{IEEEkeywords}
+	Parallelisierung, Message Passing Interface, Sortieralgorithmen, Merge Sort
+\end{IEEEkeywords}
+
 \section{Einleitung}
 \input{subsection/Einleitung.tex}
 \section{Grundlagen}
-Im folgenden Abschnitt wird die Theorie des Merge Sorts erklärt und danach wird auf das Konzept des Message Passing Interface und des Cloud Computing eingegangen. Diese Grundlagen bilden die Voraussetzungen für die Umsetzung des Projekts.
+Im folgenden Abschnitt wird die Theorie des Merge Sort Sortieralgorithmus erläutert. Im Anschluss wird das Konzept der Parallelisierung über den Standard Message Passing Interface unter Verwendung des Cloud Computing betrachtet.
 \input{subsection/MergeSort.tex}
 \input{subsection/Message Passing Interface.tex}
 \input{subsection/Cloud Computing.tex}
 
 \section{Umsetzung}
+Das Projekt wird in C++ sowie der Bibliothek OpenMPI und der Testsuite \textit{gtest} umgesetzt.
 \input{subsection/Parallelisierung.tex}
 \input{subsection/Optimierung.tex}
 \input{subsection/Test.tex}
 
-%\input{section/Ergebnis.tex}
+\input{section/Ergebnis.tex}
 \input{section/Auswertung.tex}
 \input{subsection/Fazit}
 
 
 \section*{Autorenverzeichnis}
-Karina Heins:\\ 
-Message Passing Interface; Optimierungschitte; Fazit
-
-Florian Schatz:\\
- Zusammenfassung; Einleitung; MergeSort
- 
-Patrick Madlindl:\\
- Test; Ergebnisse; Auswertung
- 
- Marcel Dirschinger:\\
- Cloud Computing; Parallelisierung; Optimierter Algorithmus
+\noindent 
+Karina Heins: \textit{Message Passing Interface, Optimierungschritte, Fazit}\\
+Florian Schatz: \textit{Zusammenfassung, Einleitung, Merge Sort}\\
+Patrick Madlindl: \textit{Test, Ergebnisse, Auswertung}\\
+Marcel Dirschinger: \textit{Cloud Computing, Parallelisierung, Optimierter Algorithmus}
 
 \begin{thebibliography}{00}
 \bibitem{b1} Dietmar Fey \glqq Grid-Computing: Eine Basistechnologie für Computational Science\grqq{}, Springer Verlag Heidelberg, Berlin, Seite 99-117 ,2010
