@@ -11,6 +11,7 @@ Nach der Optimierung waren Verbesserungen der Laufzeit zu beobachten. Zwei Proze
 Im ersten Programmentwurf versendet der Master die Wörter an die sieben Prozesse zum Sortieren, ohne selber einen Bereich zu sortieren. Dies führt dazu, dass ein Prozess nur die Daten verschickt und empfängt. In der Zwischenzeit, wo die sieben Prozesse sortieren, wartet ein Prozess bis Daten zurückgeschickt werden. Diese Zwischenzeit kann der Master nutzen, um selber einen Teilbereich zu sortieren. So werden acht statt sieben Prozesse zum Sortieren genutzt.  
 
 \subsubsection{Optimierungsschritt}
+\label{Optimierung3}
 Eine weiterer Optimierungsschritt ist, dass alle eingelesenen Wörter aus der Datei in einem Array verschickt werden. Somit muss der Array zunächst nicht in die einzelnen zu sortierenden Bereiche aufgeteilt werden. Jeder Prozess erhält einen Buchstabenbereich von 2-3 Buchstaben. Z.B. erhält der erste Prozess den Buchstabenbereich von a und b. Somit sortiert er nur die Wörter alphabetisch, die mit a oder b anfangen. Die Optimierung liegt am Zusammenführen der einzeln sortierten Arrays der Slaves. Der Master fügt die sortierten Arrays hintereinander zu einem vollständig Array zusammen, in dem alle Wörter enthalten sind. \\
 
 %Mögliche Optimierung (wenn nicht gewünscht weglassen)
