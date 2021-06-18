@@ -3,16 +3,16 @@ Es werden Laufzeitmessungen durchgeführt, um die Auswirkung der Parallelisierun
 \\
 Eine Messergebnis ist die mithilfe der Standard Template Bibliothek std::chrono gemessene Zeit, welche im Programmablauf des Master-Knotens zwischen dem Zeitpunkt unmittelbar vor der Verteilung der Teilelemente 
 des zu sortierenden Textes an die Slave-Knoten und dem Zeitpunkt unmittelbar nach dem Zusammenführen der Ergebnisse der Slave-Rechenknoten verstreicht.
-Das arithmetische Mittel sowie die Standardabweichung der Messungen mit kürzerer Wörterzahl sind in der oberen Hälfte von Tabelle 1 aufgeführt. Die entsprechenden Werte zur größeren Datei sind in der unteren Hälfte von Tabelle 1 dargestellt.
+Das arithmetische Mittel sowie die Standardabweichung der Messungen mit kürzerer Wörterzahl sind in der oberen Hälfte von Tabelle \ref{zeiten_tabelle_lang_und_kurz} aufgeführt. Die entsprechenden Werte zur größeren Datei sind in der unteren Hälfte von Tabelle \ref{zeiten_tabelle_lang_und_kurz} dargestellt.
 \\
 Bei der Messung mit kleiner Datei und genau einem Rechenknoten ist eine im Vergleich zu anderen Rechenknotenanzahlen erhöhte Unsicherheit zu erkennen. Die mittlere benötigte Rechenzeit ist signifikant höher als bei anderen Messungen mit einer Rechenknotenanzahl größer eins. Bei den Rechenknotenanzahlen vier, fünf und sechs ist eine im Vergleich geringe Abweichung festzustellen.
 \\
 Die Mittelwerte der Zeiten für die kleinere Datei liegen ab einer Rechenknotenanzahl von 4 eng beieinander. Mit den vorliegenden Daten kann keine statistisch begründete Aussage getroffen werden, ob sich die Rechenzeit ab einer Knotenzahl von 4 noch messbar verändert. Der scheinbar deutlich niedrigere Mittelwert der 7. Messung wird durch eine höhere Messunsicherheit relativiert.
 \\
-Dies kann auch im Kastenschaubild (Whisker Plot) zu den Messungen der kleineren Datei, Abbildung 2, nachvollzogen werden. Ebenfalls ist eine deutliche 
+Dies kann auch im Kastenschaubild (Whisker Plot) zu den Messungen der kleineren Datei, Abbildung \ref{boxplot_times}, nachvollzogen werden. Ebenfalls ist eine deutliche 
 der Laufzeiten über die Anzahl der Rechenknoten zu erkennen. Ebenfalls ist ein starker Ausreißer bei der Knotenzahl eins zu erkennen. Bei Knotenzahlen zwei, vier und sechs gibt es ebenfalls Ausreißer. Im Kontext der niedrigen Standardabweichung der Messungen mit Knotenzahlen vier und 6 bedeutet das einerseits, dass die weiteren Messwerte dieser Messung besonders konsistent sind. Andererseits kann dies ein Hinweis darauf sein, dass die gemessenen Zeiten durch Zufall besonders konsistent und niedrig ausgefallen sind.
 \\
-Die Ergebnisse der Messungen mit der größeren Datei sind in Abbildung 3 in Form eines Kastenschaubilds dargestellt. Im Vergleich zur kleineren Dateigröße sind hier weniger Ausreißer vorhanden und die absoluten Rechenzeiten sind durchweg höher.
+Die Ergebnisse der Messungen mit der größeren Datei sind in Abbildung \ref{boxplot_times_long} in Form eines Kastenschaubilds dargestellt. Im Vergleich zur kleineren Dateigröße sind hier weniger Ausreißer vorhanden und die absoluten Rechenzeiten sind durchweg höher.
 \\
 Bei beiden Dateigrößen ist mit steigender Rechenknotenzahl ein zunächst signifikanter Abfall der Rechenzeiten zu beobachten, bevor ein Effekt der Abflachung auftritt. Ab einer Rechenknotenzahl von vier bei der kleineren und fünf bei der größeren Datei kann kein weiterer signifikanter Abfall der Rechenzeit festgestellt werden.
 \\
